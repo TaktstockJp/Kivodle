@@ -1,6 +1,10 @@
 # CHANGELOG
 All notable changes to this project will be documented in this file.
 
+## [1.0.1-20240623]
+### Fixed
+- Misskeyにシェアする時に改行が1行多い問題を修正
+
 ## [1.0.0-20240623]
 ### Added
 - 初期バージョン
