@@ -206,13 +206,13 @@ function endGame(isHit) {
         }
 
         $('#copyButton').on('click', function () {
-            navigator.clipboard.writeText(shareStr + location.href).then(
+            navigator.clipboard.writeText(`${shareStr}\n${location.href}`).then(
                 () => {
                     $('#copyButton').html('コピーしました');
                 });
         });
         $('#xButton').on('click', function () {
-            window.open(`https://x.com/intent/tweet?text=${encodedShareStr}&url=${location.href}`);
+            window.open(`https://x.com/intent/tweet?text=${encodedShareStr}%0A&url=${location.href}`);
         });
         $('#misskeyButton').on('click', function () {
             window.open(`https://misskey-hub.net/share/?text=${encodedShareStr}&url=${location.href}&visibility=public&localOnly=0`);
@@ -239,8 +239,6 @@ function createShareStrForDaily(isHit) {
         shareStr += judges[i].isSameImplDate === same ? '🟩' : '🟥';
         shareStr += '\n';
     }
-
-    shareStr += '\n';
 
     return shareStr;
 }
