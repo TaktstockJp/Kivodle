@@ -1,0 +1,118 @@
+<html>
+
+<head>
+    <title>Kivodle</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://magicant.github.io/sjavascript/mt.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="./js/const.js"></script>
+    <script src="./js/kivodle.js"></script>
+    <script src="./js/students.js"></script>
+    <link rel="stylesheet" href="css/kivodle.css" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+</head>
+
+<body onload="pageLoad()">
+    <nav id="menuBar">
+        <ul>
+            <li><a href="" onclick="switchDailyMode(); return false;">▽デイリーモード</a></li>
+            <li><a href="" onclick="switchEndlessMode(); return false;">▽エンドレスモード</a></li>
+            <li><a href="" onclick="openModal(); return false;">▽Kivodleについて</a></li>
+        </ul>
+    </nav>
+    <div id="app">
+        <div id="logoArea">
+            <img id="logo" src="resource/logo.png">
+        </div>
+        <div id="infoArea">
+        </div>
+        <div id="guessArea">
+            <select id="selectGuess" style="width: 80%;">
+            </select>
+            <button id="buttonGuess" onclick="answerProcess($('#selectGuess').val())">解答</button>
+        </div>
+        <div id="checkArea">
+            <table id="checkTable">
+                <thead id="checkTableHeader">
+                    <tr>
+                        <th class="studentNameCol">キャラ名</th>
+                        <th class="weaponTypeCol">武器種</th>
+                        <th class="classCol">クラス</th>
+                        <th class="schoolCol">学校</th>
+                        <th class="attackTypeCol">攻撃属性</th>
+                        <th class="implDateCol">実装日</th>
+                    </tr>
+                </thead>
+                <tbody id="checkTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="modal">
+        <div id="modalClose" onclick="closeModal();">×</div>
+        <div id="modalInner">
+            <h2>Kivodleって何？</h2>
+            <p>
+                スマホゲーム「<a href="https://bluearchive.jp/">ブルーアーカイブ</a>」にプレイアブルとして登場する生徒（キャラクター）から１人が正解として選ばれるので、その生徒の特徴から推理しようというゲームです。
+            </p>
+            <h2>遊び方</h2>
+            <ol>
+                <li>プルダウンリストから生徒を１人選んで「解答」ボタンを押す。</li>
+                <li>
+                    選んだ生徒と正解の生徒との間で「武器種」「クラス」「学校」「攻撃属性」「実装日」の比較を行う。<br>
+                    一致している場合は<span class="same">緑背景</span>、そうでない場合は<span class="wrong">赤背景</span>になる。<br>
+                    さらに、実装日は正解の生徒の実装日が選んだ生徒の実装日より前か後かも表示される。<br>
+                </li>
+                <li>
+                    2.の内容をもとに推理して1.を行い、５回以内に正解の生徒を当てられればクリア。<br>
+                    そうでない場合はゲームオーバー。
+                </li>
+            </ol>
+            <h2>モードについて</h2>
+            <h3>デイリーモード</h3>
+            <p style="margin-bottom: 2px;">
+                日替わりで正解が変化します。<br>
+                正解が切り替わるタイミングは世界標準時で０時（日本時間で午前９時）です。<br>
+                本家Wordleのように結果をシェアできます。
+            </p>
+            <h3>エンドレスモード</h3>
+            <p>
+                遊ぶたびに正解が変化し、連続正解数が記録されます。<br>
+                不正解でゲームオーバーになった時、何回連続で正解できたかをシェアできます。<br>
+            </p>
+            <h2>注意事項</h2>
+            <ul>
+                <li>更新履歴は<a href="https://github.com/TaktstockJp/Kivodle/blob/main/CHANGELOG.md">こちら</a>を参照してください。</li>
+                <li>2024/06/23現在、カンナ（水着）、フブキ（水着）、キリノ（水着）のデータまで追加済みです。</li>
+                <li>新しい生徒はゲームで実装された日の翌日からリストに追加・正解として選ばれる対象になります。</li>
+                <li>コラボ生徒の「学校」は全員「その他」となります。</li>
+                <li>ブラウザやタブを閉じるとその時に遊んでいたデータが破棄されますのでご注意ください。</li>
+            </ul>
+            <h2>不具合報告等について</h2>
+            <p style="margin-bottom: 2px;">以下のいずれかにお願いします。</p>
+            <ul>
+                <li><a href="https://github.com/TaktstockJp/Kivodle/issues">GitHubのIssues</a></li>
+                <li><a href="https://misskey.io/@Taktstock_mov">作者のmisskey.ioアカウント</a></li>
+            </ul>
+            <h2>お借りしたものなど</h2>
+            <ul>
+                <li><a href="https://bluearchive.wikiru.jp/">ブルーアーカイブ（ブルアカ）攻略 Wiki</a>：生徒のデータを参照させていただきました。</li>
+                <li><a href="https://tmp.nulla.top/ba-logo/">BlueArchive-Style Logo Generator</a>：ロゴを生成して使用させていただきました。</li>
+                <li><a href="https://jquery.com/">jQuery</a></li>
+                <li><a href="https://magicant.github.io/sjavascript/mt.html">Mersenne Twister in JavaScript</a></li>
+                <li><a href="https://select2.org/">Select2</a></li>
+            </ul>
+            <h2>リポジトリ等</h2>
+            <p>
+                リポジトリは<a href="https://github.com/TaktstockJp/Kivodle">こちら</a><br>
+                ソースコードはMIT Licenseで提供されています。
+            </p>
+        </div>
+    </div>
+    <div id="modalOverlay" onclick="closeModal();"></div>
+</body>
+
+</html>

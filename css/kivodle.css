@@ -1,0 +1,222 @@
+@media screen and (max-width: 960px) {
+    #app {
+        width: 100%;
+    }
+
+    #modal {
+        width: 90%;
+    }
+}
+
+@media screen and (min-width: 960px) {
+    #app {
+        width: 960px;
+    }
+
+    #modal {
+        width: 864px;
+    }
+}
+
+body {
+    font-size: 1rem;
+}
+
+#menuBar {
+    width: 100%;
+    height: auto;
+    background-color: rgb(0, 148, 185);
+    box-sizing: border-box;
+}
+
+#menuBar ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#menuBar li {
+    list-style: none;
+}
+
+#menuBar a {
+    display: block;
+    color: white;
+    margin-right: 20px;
+}
+
+#app {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#logoArea {
+    position: relative;
+    height: 200px;
+}
+
+#logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+#infoArea {
+    text-align: center;
+}
+
+#guessArea {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    margin: 0 auto;
+    padding: 5px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#selectGuess {
+    display: inline-block;
+    border-radius: 5px;
+    margin-left: auto;
+}
+
+#buttonGuess {
+    margin-right: auto;
+    width: 20%;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 5px;
+    width: 100%;
+}
+
+table th,
+table td {
+    border-radius: 3px;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 5px 3px;
+    border: solid 1px #008f99;
+}
+
+th {
+    background-color: #a5f9ff;
+}
+
+td {
+    height: 60px;
+}
+
+.studentNameCol {
+    width: 24%;
+}
+
+.weaponTypeCol {
+    width: 12%;
+}
+
+.classCol {
+    width: 12%;
+}
+
+.schoolCol {
+    width: 18%;
+}
+
+.attackTypeCol {
+    width: 12%;
+}
+
+.implDateCol {
+    width: 20%;
+}
+
+.same {
+    background-color: #aaffaa;
+}
+
+.wrong {
+    background-color: #ffaaaa;
+}
+
+.fold {
+    visibility: hidden;
+    height: 0px;
+}
+
+#infoButtonArea button {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 120px;
+}
+
+#modal, #modalOverlay {
+    display: none;
+    position: fixed;
+}
+
+#modal {
+    height: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    z-index: 101;
+    text-align: left;
+    border: solid 1px #181818;
+    overflow-y: scroll;
+}
+
+#modalOverlay {
+    width: 100%;
+    height: 100%;
+    background: grey;
+    opacity: .6;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+#modalClose{
+    position: sticky;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 30px;
+    left: calc(100% - 50px);
+    width: 40px;
+    height: 0px;
+    font-size: 40px;
+    color: #414141;
+    cursor: pointer;
+  }
+
+#modalInner {
+    margin: 30px;
+}
+
+#modalInner h2 {
+    margin-bottom: 2px;
+}
+
+#modalInner h3 {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+#modalInner p, #modalInner ul, #modalInner ol {
+    margin-top: 2px;
+}
+
+#modalInner ul, #modalInner ol {
+    padding-left: 20px;
+}
+
+#modal.open, #modalOverlay.open {
+    display: block;
+}
