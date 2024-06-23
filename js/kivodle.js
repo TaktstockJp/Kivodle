@@ -257,9 +257,9 @@ function guessDate(targetImplDate, guessImplDate) {
 
     let i;
     for (i = 0; i < targetArr.length; i++) {
-        if (targetArr[i] > guessArr[i]) {
+        if (Number(targetArr[i]) > Number(guessArr[i])) {
             return after;
-        } else if (targetArr[i] < guessArr[i]) {
+        } else if (Number(targetArr[i]) < Number(guessArr[i])) {
             return before;
         }
     }
