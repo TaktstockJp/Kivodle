@@ -248,7 +248,7 @@ function createShareStrForDaily(isHit) {
 
 // SNSでシェアする時の文章を作る（エンドレスモード用）
 function createShareStrForEndless() {
-    return `#Kivolde のエンドレスモードで${corrects}問連続で正解しました！\n\n`;
+    return `#Kivodle のエンドレスモードで${corrects}問連続で正解しました！\n`;
 }
 
 // 日付の前後判定
