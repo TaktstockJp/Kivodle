@@ -93,6 +93,7 @@ function switchDailyMode() {
     }
 
     endlessModeFlg = false;
+    judges.splice(0);
     setup();
 }
 
@@ -111,6 +112,7 @@ function switchEndlessMode() {
     }
 
     endlessModeFlg = true;
+    judges.splice(0);
     setup();
 }
 
@@ -221,6 +223,7 @@ function endGame(isHit) {
         // エンドレスモードで正解した時の処理
         $('#infoButtonArea').append($('<button>').attr('id', 'nextButton').html('次の問題へ'));
         $('#nextButton').on('click', function () { setup(true) });
+        judges.splice(0);
     }
 }
 
