@@ -1,6 +1,12 @@
 # CHANGELOG
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### Added
+- 生徒の検索時にひらがなで検索できるように
+### Fixed
+- プルダウンの高さを大きくした
+
 ## [1.0.3-20240626]
 ### Fixed
 - エンドレスモードシェア時の文章のtypoと余計な改行の修正
