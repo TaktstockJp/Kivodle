@@ -29,9 +29,36 @@ function pageLoad() {
 
     // プルダウンリストに値を設定する
     implementedStudents.forEach(function (element) {
-        $('#selectGuess').append($('<option>').html(element.studentName).val(element.studentName));
+        $('#selectGuess').append($('<option>').html(element.studentName).val(element.studentName).attr('data-search-hiragana', convertToHiragana(element.studentName)));
     });
-    $('#selectGuess').select2({ width: 'resolve' });
+    
+    // 横幅とCustomMatcherの登録
+    $('#selectGuess').select2({
+        width: 'resolve',
+        matcher: function (params, data) {
+            const select2SearchStr = $(data.element).data('search-hiragana');
+            let modifiedData;
+            if ($.trim(params.term) === '') {
+                return data;
+            }
+            if (typeof data.text === 'undefined') {
+                return null;
+            }
+            if (data.text.indexOf(params.term) > -1) {
+                modifiedData = $.extend({}, data, true);
+                return modifiedData;
+            }
+
+            if (select2SearchStr === null || select2SearchStr === void 0) {
+                return null;
+            }
+            if (select2SearchStr.toString().indexOf(params.term) > -1) {
+                modifiedData = $.extend({}, data, true);
+                return modifiedData;
+            }
+            return null;
+        }
+    });
 }
 
 // ゲームの初期化
@@ -39,7 +66,7 @@ function setup(nextFlg = false) {
     // 解答回数の初期化
     tries = 0;
 
-    if(endlessModeFlg && nextFlg) {
+    if (endlessModeFlg && nextFlg) {
         // エンドレスモードで「次の問題へ」を押した時
         corrects++;
     } else {
@@ -276,4 +303,35 @@ function openModal() {
 function closeModal() {
     $('#modalOverlay').removeClass('open');
     $('#modal').removeClass('open');
+}
+
+function convertToHiragana(src) {
+    const replaceDic = {
+        '（': '',
+        '）': '',
+        '正月': 'しょうがつ',
+        '水着': 'みずぎ',
+        '私服': 'しふく',
+        '温泉': 'おんせん',
+        '幼女': 'ようじょ',
+        '体操服': 'たいそうふく',
+        '応援団': 'おうえんだん',
+        '御坂美琴': 'みさかみこと',
+        '佐天涙子': 'さてんるいこ',
+        '食蜂操祈': 'しょくほうみさき',
+        '初音': 'はつね',
+    };
+
+    let ret = src.replace(/[\u30a1-\u30f6]/g, function (match) {
+        var chr = match.charCodeAt(0) - 0x60;
+        return String.fromCharCode(chr);
+    });
+
+    for (let key in replaceDic) {
+        if (src.includes(key)) {
+            ret = ret.replace(key, replaceDic[key]);
+        }
+    }
+
+    return ret;
 }
