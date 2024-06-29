@@ -8,12 +8,21 @@ const wrong = 'wrong';
 const before = 'より前';
 const after = 'より後';
 
+const keyGeneralVisited = 'Kivodle.General.Visited';
+const keyDailyLastPlayed = 'Kivodle.Daily.LastPlayed';
+const keyDailyGuesses = 'Kivodle.Daily.Guesses';
+const keyDailyWinStreak = 'Kivodle.Daily.WinStreak';
+const keyEndlessTarget = 'Kivodle.Endless.Target';
+const keyEndlessGuesses = 'Kivodle.Endless.Guesses';
+const keyEndlessCorrects = 'Kivodle.Endless.Corrects';
+const keyEndlessHighScore = 'Kivodle.Endless.HighScore';
+
 let target;
 let tries;
-let corrects;
-let endFlg = false;
+let corrects = 0;
 let endlessModeFlg = false;
 let implementedStudents;
+let guesses = [];
 const judges = [];
 const now = new Date();
 
@@ -31,7 +40,7 @@ function pageLoad() {
     implementedStudents.forEach(function (element) {
         $('#selectGuess').append($('<option>').html(element.studentName).val(element.studentName).attr('data-search-hiragana', convertToHiragana(element.studentName)));
     });
-    
+
     // 横幅とCustomMatcherの登録
     $('#selectGuess').select2({
         width: 'resolve',
@@ -59,6 +68,12 @@ function pageLoad() {
             return null;
         }
     });
+
+    // サイトを初めて訪れる場合、説明用のモーダルを表示
+    if (!getLocalStorage(keyGeneralVisited)) {
+        setLocalStorage(keyGeneralVisited, true);
+        openModal();
+    }
 }
 
 // ゲームの初期化
@@ -66,36 +81,83 @@ function setup(nextFlg = false) {
     // 解答回数の初期化
     tries = 0;
 
-    if (endlessModeFlg && nextFlg) {
-        // エンドレスモードで「次の問題へ」を押した時
-        corrects++;
-    } else {
-        // 上記以外
-        corrects = 0;
-        endFlg = false;
-    }
-
-    // 答えの設定
-    if (endlessModeFlg) {
-        setTarget(Date.now());
-    } else {
-        setTarget(now.getUTCFullYear() * 10000 + now.getUTCMonth() * 100 + now.getUTCDate());
-    }
-
-    setInfoAreaInGame();
+    // 変数とDOMの初期化
+    guesses.splice(0);
+    judges.splice(0);
+    setTriesAreaInGame();
     $('#guessArea').removeClass('fold');
     $('#infoArea').removeClass(same).removeClass(wrong);
-    $('#checkTableBody').html('');
+    $('#checkTableBody').empty();
+    $('#infoButtonArea').remove();
+
+    // モード別処理
+    if (endlessModeFlg) {
+        setupEndlessMode(nextFlg);
+    } else {
+        setupDailyMode();
+    }
 }
 
-// infoAreaの書き換え
-function setInfoAreaInGame() {
-    if (endlessModeFlg) {
-        $('#infoArea').html($('<span>').css('margin-right', '10px').html(`エンドレスモード連続正解数： ${corrects}`));
+// デイリーモードセットアップ時の処理
+function setupDailyMode() {
+    // デイリーモードの正解の設定
+    setTarget(now.getUTCFullYear() * 10000 + now.getUTCMonth() * 100 + now.getUTCDate());
+
+    // 今日分のセーブデータの有無によって分岐
+    const todayStr = `${now.getUTCFullYear()}/${now.getUTCMonth() + 1}/${now.getUTCDate()}`
+    const lastPlayed = getLocalStorage(keyDailyLastPlayed);
+    if (lastPlayed !== null && guessDate(todayStr, lastPlayed) === same) {
+        // セーブデータがある場合それに沿ってゲームを再現する
+        guesses = getLocalStorage(keyDailyGuesses) || [];
+        answerForLoad();
     } else {
-        $('#infoArea').html($('<span>').css('margin-right', '10px').html('デイリーモード'));
+        // セーブデータがないか、当日のもの以外
+        removeLocalStorage(keyDailyGuesses);
+        setLocalStorage(keyDailyLastPlayed, todayStr);
     }
-    $('#infoArea').append(`解答回数： ${tries} ／ ${maxTries}`);
+
+    setModeInfoAreaForDaily();
+}
+
+// エンドレスモードセットアップ時の処理
+function setupEndlessMode(nextFlg) {
+    // エンドレスモードの正解の設定
+    const lastTarget = getLocalStorage(keyEndlessTarget);
+    if (nextFlg || !lastTarget) {
+        // エンドレスモード初回、もしくは前の問題で正解して「次へ」を選んでいた場合
+        setTarget(Date.now());
+        setLocalStorage(keyEndlessTarget, target);
+        removeLocalStorage(keyEndlessGuesses);
+    } else {
+        // エンドレスモードのセーブデータのロード時
+        target = lastTarget;
+        guesses = getLocalStorage(keyEndlessGuesses) || [];
+        corrects = getLocalStorage(keyEndlessCorrects) || 0;
+        answerForLoad();
+    }
+
+    setModeInfoAreaForEndless();
+}
+
+function answerForLoad() {
+    guesses.forEach(function (elm) {
+        answerProcess(elm, true);
+    });
+}
+
+// triesAreaの書き換え
+function setTriesAreaInGame() {
+    $('#triesArea').html(`解答回数： ${tries} ／ ${maxTries}`);
+}
+
+function setModeInfoAreaForDaily() {
+    $('#modeNameArea').html('デイリーモード');
+    $('#modeWinStreakArea').html(`連続正解日数：${getLocalStorage(keyDailyWinStreak) || 0}`)
+}
+
+function setModeInfoAreaForEndless() {
+    $('#modeNameArea').html(`エンドレスモード<br>現在のスコア：${corrects}`);
+    $('#modeWinStreakArea').html(`ハイスコア：${getLocalStorage(keyEndlessHighScore) || 0}`)
 }
 
 // 解答を設定する
@@ -109,18 +171,10 @@ function setTarget(seed) {
 function switchDailyMode() {
     if (!endlessModeFlg) {
         // 既にデイリーモードの場合は何もしない
-        alert('現在すでにデイリーモードです。')
         return;
     }
 
-    if ((tries > 0 || corrects > 0) && !endFlg) {
-        if (!confirm('デイリーモードに切り替えると、現在進行中のゲームは破棄されます。\nデイリーモードに切り替えますか？')) {
-            return;
-        }
-    }
-
     endlessModeFlg = false;
-    judges.splice(0);
     setup();
 }
 
@@ -128,23 +182,15 @@ function switchDailyMode() {
 function switchEndlessMode() {
     if (endlessModeFlg) {
         // 既にエンドレスモードの場合は何もしない
-        alert('現在すでにエンドレスモードです。')
         return;
     }
 
-    if ((tries > 0) && !endFlg) {
-        if (!confirm('エンドレスモードに切り替えると、現在進行中のゲームは破棄されます。\nエンドレスモードに切り替えますか？')) {
-            return;
-        }
-    }
-
     endlessModeFlg = true;
-    judges.splice(0);
     setup();
 }
 
 // 解答ボタンを押した時の処理
-function answerProcess(guessedName) {
+function answerProcess(guessedName, loadFlg = false) {
     // 引数として渡された名前から解答として選ばれた生徒のオブジェクトを取得
     const guessed = implementedStudents.find(s => s.studentName === guessedName);
 
@@ -163,18 +209,24 @@ function answerProcess(guessedName) {
     // 挑戦回数のインクリメント
     tries++;
 
+    // セーブデータのロード中でない場合、答えた生徒をセーブ
+    if (!loadFlg) {
+        guesses.push(guessedName);
+        setLocalStorage(endlessModeFlg ? keyEndlessGuesses : keyDailyGuesses, guesses)
+    }
+
     if (judgeObj.isHit === same || tries === maxTries) {
         // 正解または回数を使い切った時の処理
-        endGame(judgeObj.isHit);
+        endGame(judgeObj.isHit, loadFlg);
     } else {
-        setInfoAreaInGame();
+        setTriesAreaInGame();
     }
 }
 
 // 各要素ごとの正誤判定
 function guess(guessed) {
     const judgeObj = {
-        isHit: target === guessed ? same : wrong,
+        isHit: target.studentName === guessed.studentName ? same : wrong,
         isSameWeapon: target.data.weapon === guessed.data.weapon ? same : wrong,
         isSameClass: target.data.class === guessed.data.class ? same : wrong,
         isSameSchool: target.data.school === guessed.data.school ? same : wrong,
@@ -209,19 +261,18 @@ function prependTableRow(guessed, judgeObj) {
 }
 
 // ゲーム終了時の処理
-function endGame(isHit) {
+function endGame(isHit, loadFlg = false) {
     const result = `${isHit === same ? '正解！' : '不正解…。'}答えは「${target.studentName}」でした。`;
 
     $('#guessArea').addClass('fold');
-    $('#infoArea').addClass(isHit).html($('<div>').html(result));
+    $('#infoArea').addClass(isHit);
     $('#infoArea').append($('<div>').attr('id', 'infoButtonArea'));
+    $('#triesArea').html($('<div>').html(result));
 
     if (!endlessModeFlg || (endlessModeFlg && isHit === wrong)) {
         // デイリーモードでゲーム終了した時とエンドレスモードで正解できなかった時の処理
         const shareStr = endlessModeFlg ? createShareStrForEndless() : createShareStrForDaily(isHit);
         const encodedShareStr = encodeURIComponent(shareStr);
-
-        endFlg = true;
 
         $('#infoButtonArea').append($('<div>').attr('id', 'shareButtonArea'));
         $('#shareButtonArea').append($('<button>').attr('id', 'copyButton').html('コピー'));
@@ -232,6 +283,19 @@ function endGame(isHit) {
             $('#infoButtonArea').append($('<div>').attr('id', 'retryButtonArea').css('margin-top', '5px'));
             $('#retryButtonArea').append($('<button>').attr('id', 'retryButton').html('最初から'));
             $('#retryButton').on('click', function () { setup() });
+
+            // セーブデータ削除
+            corrects = 0;
+            removeLocalStorage(keyEndlessTarget);
+            removeLocalStorage(keyEndlessCorrects);
+            removeLocalStorage(keyEndlessGuesses);
+        } else if (!loadFlg) {
+            let winStreak = getLocalStorage(keyDailyWinStreak);
+            if (isHit === same) {
+                setLocalStorage(keyDailyWinStreak, winStreak == null ? 1 : winStreak + 1);
+            } else {
+                setLocalStorage(keyDailyWinStreak, 0);
+            }
         }
 
         $('#copyButton').on('click', function () {
@@ -248,9 +312,15 @@ function endGame(isHit) {
         });
     } else {
         // エンドレスモードで正解した時の処理
+        if (!loadFlg) {
+            setLocalStorage(keyEndlessCorrects, ++corrects);
+            if (corrects > getLocalStorage(keyEndlessHighScore)) {
+                setLocalStorage(keyEndlessHighScore, corrects);
+            }
+            setModeInfoAreaForEndless();
+        }
         $('#infoButtonArea').append($('<button>').attr('id', 'nextButton').html('次の問題へ'));
         $('#nextButton').on('click', function () { setup(true) });
-        judges.splice(0);
     }
 }
 
@@ -334,4 +404,17 @@ function convertToHiragana(src) {
     }
 
     return ret;
+}
+
+function getLocalStorage(key) {
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : null;
+}
+
+function setLocalStorage(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+}
+
+function removeLocalStorage(key) {
+    localStorage.removeItem(key);
 }

@@ -67,6 +67,22 @@ body {
     text-align: center;
 }
 
+#modeInfoArea {
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+}
+
+#modeInfoArea div {
+    width: 50%;
+    margin-left: 2px; 
+    margin-right: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
 #guessArea {
     display: flex;
     flex-wrap: nowrap;
