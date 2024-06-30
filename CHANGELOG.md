@@ -13,8 +13,10 @@ All notable changes to this project will be documented in this file.
   - エンドレスモード中断時、前回の正解
   - エンドレスモードの現在のセッションの連続正解数
   - エンドレスモードの連続正解数の最高記録
+- Mastodonへのシェアボタンの実装
 ### Changed
 - プルダウンの上の方の情報の表示のしかたを調整
+- ボタンの横幅を少し長くした
 ### Fixed
 - プルダウンの高さを大きくした
 ### Deleted

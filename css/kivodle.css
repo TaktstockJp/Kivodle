@@ -75,7 +75,7 @@ body {
 
 #modeInfoArea div {
     width: 50%;
-    margin-left: 2px; 
+    margin-left: 2px;
     margin-right: 2px;
     display: flex;
     align-items: center;
@@ -165,9 +165,8 @@ td {
 }
 
 #infoButtonArea button {
-    margin-left: 5px;
-    margin-right: 5px;
-    width: 120px;
+    margin: 5px;
+    width: 140px;
 }
 
 #modal, #modalOverlay {
@@ -198,7 +197,7 @@ td {
     z-index: 100;
 }
 
-#modalClose{
+#modalClose {
     position: sticky;
     display: flex;
     align-items: center;
@@ -210,7 +209,7 @@ td {
     font-size: 40px;
     color: #414141;
     cursor: pointer;
-  }
+}
 
 #modalInner {
     margin: 30px;
