@@ -312,7 +312,7 @@ function endGame(isHit, loadFlg = false) {
             window.open(`https://misskey-hub.net/share/?text=${encodedShareStr}&url=${location.href}&visibility=public&localOnly=0`);
         });
         $('#mastodonButton').on('click', function () {
-            window.open(`https://donshare.net/share.html?text=${encodedShareStr}&url=${location.href}&visibility=public&localOnly=0`);
+            window.open(`https://donshare.net/share.html?text=${encodedShareStr}&url=${location.href}`);
         });
     } else {
         // エンドレスモードで正解した時の処理
