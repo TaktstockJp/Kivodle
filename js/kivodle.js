@@ -290,12 +290,14 @@ function endGame(isHit, loadFlg = false) {
             removeLocalStorage(keyEndlessCorrects);
             removeLocalStorage(keyEndlessGuesses);
         } else if (!loadFlg) {
+            // デイリーモードかつセーブデータのロード時以外は連続正解日数の設定
             let winStreak = getLocalStorage(keyDailyWinStreak);
             if (isHit === same) {
                 setLocalStorage(keyDailyWinStreak, winStreak == null ? 1 : winStreak + 1);
             } else {
                 setLocalStorage(keyDailyWinStreak, 0);
             }
+            setModeInfoAreaForDaily();
         }
 
         $('#copyButton').on('click', function () {
