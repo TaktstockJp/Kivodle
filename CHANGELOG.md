@@ -13,6 +13,8 @@ All notable changes to this project will be documented in this file.
   - エンドレスモード中断時、前回の正解
   - エンドレスモードの現在のセッションの連続正解数
   - エンドレスモードの連続正解数の最高記録
+- 誤操作対策を入れた
+  - ボタンを押してから処理が終わるまでの間ボタンを無効に
 ### Changed
 - プルダウンの上の方の情報の表示のしかたを調整
 ### Fixed
