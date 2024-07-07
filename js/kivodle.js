@@ -96,6 +96,9 @@ function setup(nextFlg = false) {
     } else {
         setupDailyMode();
     }
+
+    // ロード後に解答回数を使い切っていない場合ボタンを有効化
+    if (tries < maxTries) { $("#buttonGuess").removeAttr('disabled'); }
 }
 
 // デイリーモードセットアップ時の処理
@@ -191,11 +194,15 @@ function switchEndlessMode() {
 
 // 解答ボタンを押した時の処理
 function answerProcess(guessedName, loadFlg = false) {
+    // ボタンを無効化
+    $("#buttonGuess").attr('disabled', '');
+
     // 引数として渡された名前から解答として選ばれた生徒のオブジェクトを取得
     const guessed = implementedStudents.find(s => s.studentName === guessedName);
 
-    // 生徒がリストから見つからなかったら何もしないで戻す
-    if (guessed == null) {
+    // 生徒がリストから見つからなかったか既に解答に使った生徒なら何もしないで戻す
+    if (guessed == null || (!loadFlg && guesses.includes(guessedName))) {
+        $("#buttonGuess").removeAttr('disabled');
         return;
     }
 
@@ -219,7 +226,9 @@ function answerProcess(guessedName, loadFlg = false) {
         // 正解または回数を使い切った時の処理
         endGame(judgeObj.isHit, loadFlg);
     } else {
+        // ゲームが途中の場合解答回数表示の更新とボタンの再有効化
         setTriesAreaInGame();
+        $("#buttonGuess").removeAttr('disabled');
     }
 }
 
