@@ -24,7 +24,7 @@ let endlessModeFlg = false;
 let implementedStudents;
 let guesses = [];
 const judges = [];
-const now = new Date();
+const now = getToday();
 
 // ページロード時に1回だけ実行する
 function pageLoad() {
@@ -419,6 +419,16 @@ function convertToHiragana(src) {
     }
 
     return ret;
+}
+
+// 今日の日付を取得する
+// ただしUTCで午後19時以降（日本時間午前4時～午前9時までの間）の場合日付を1日進める
+function getToday() {
+    const today = new Date();
+    if (today.getUTCHours() >= 19) {
+        today.setUTCDate(today.getUTCDate() + 1);
+    }
+    return today;
 }
 
 function getLocalStorage(key) {
