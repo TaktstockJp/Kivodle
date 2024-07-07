@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - プルダウンの上の方の情報の表示のしかたを調整
 - ボタンの横幅を少し長くした
 - デイリーモードの更新時刻をUTC0時から前日のUTC19時（日本時間午前4時）に
+- モーダルの説明文を現行に沿うように変更、および所有権・著作権に関する記述を追加
 ### Fixed
 - プルダウンの高さを大きくした
 ### Deleted
