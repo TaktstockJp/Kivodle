@@ -287,6 +287,7 @@ function endGame(isHit, loadFlg = false) {
         $('#shareButtonArea').append($('<button>').attr('id', 'copyButton').html('コピー'));
         $('#shareButtonArea').append($('<button>').attr('id', 'xButton').html('Xでシェア'));
         $('#shareButtonArea').append($('<button>').attr('id', 'misskeyButton').html('Misskeyでシェア'));
+        $('#shareButtonArea').append($('<button>').attr('id', 'mastodonButton').html('Mastodonでシェア'));
 
         if (endlessModeFlg) {
             $('#infoButtonArea').append($('<div>').attr('id', 'retryButtonArea').css('margin-top', '5px'));
@@ -320,6 +321,9 @@ function endGame(isHit, loadFlg = false) {
         });
         $('#misskeyButton').on('click', function () {
             window.open(`https://misskey-hub.net/share/?text=${encodedShareStr}&url=${location.href}&visibility=public&localOnly=0`);
+        });
+        $('#mastodonButton').on('click', function () {
+            window.open(`https://donshare.net/share.html?text=${encodedShareStr}&url=${location.href}`);
         });
     } else {
         // エンドレスモードで正解した時の処理
