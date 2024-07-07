@@ -200,8 +200,9 @@ function answerProcess(guessedName, loadFlg = false) {
     // 引数として渡された名前から解答として選ばれた生徒のオブジェクトを取得
     const guessed = implementedStudents.find(s => s.studentName === guessedName);
 
-    // 生徒がリストから見つからなかったら何もしないで戻す
-    if (guessed == null) {
+    // 生徒がリストから見つからなかったか既に解答に使った生徒なら何もしないで戻す
+    if (guessed == null || (!loadFlg && guesses.includes(guessedName))) {
+        $("#buttonGuess").removeAttr('disabled');
         return;
     }
 

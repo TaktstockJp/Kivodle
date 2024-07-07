@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
   - エンドレスモードの連続正解数の最高記録
 - 誤操作対策を入れた
   - ボタンを押してから処理が終わるまでの間ボタンを無効に
+  - 同じ生徒を2回以上解答に使おうとした場合何もせず返す処理の追加
 ### Changed
 - プルダウンの上の方の情報の表示のしかたを調整
 ### Fixed
