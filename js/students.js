@@ -167,6 +167,7 @@ const students = [
     { studentName: 'メグ', data: { weapon: 10, class: 1, school: 3, attackType: 0, implementationDate: '2023/01/31' } },
     { studentName: 'メル', data: { weapon: 4, class: 1, school: 1, attackType: 1, implementationDate: '2023/08/23' } },
     { studentName: 'モエ', data: { weapon: 4, class: 1, school: 9, attackType: 1, implementationDate: '2022/08/24' } },
+    { studentName: 'モエ（水着）', data: { weapon: 4, class: 1, school: 9, attackType: 3, implementationDate: '2024/07/10' } },
     { studentName: 'モミジ', data: { weapon: 5, class: 1, school: 1, attackType: 3, implementationDate: '2023/08/23' } },
     { studentName: 'モモイ', data: { weapon: 2, class: 1, school: 5, attackType: 1, implementationDate: '2021/04/08' } },
     { studentName: 'モモイ（メイド）', data: { weapon: 2, class: 1, school: 5, attackType: 3, implementationDate: '2024/05/22' } },

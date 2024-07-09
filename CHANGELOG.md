@@ -1,8 +1,9 @@
 # CHANGELOG
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [1.1.0-20240710]
 ### Added
+- 2024/07/10実装分（水着モエ）までの生徒データ追加
 - 生徒の検索時にひらがなで検索できるように
 - Kivodleを初めて訪れる際、説明のモーダルが表示されるように
 - 以下の情報をブラウザのLocalStorageに保存するように
