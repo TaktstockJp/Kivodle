@@ -3,6 +3,7 @@ const weapons = ['SG', 'SMG', 'AR', 'GL', 'HG', 'RL', 'SR', 'RG', 'MG', 'MT', 'F
 const classes = ['タンク', 'アタッカー', 'ヒーラー', 'サポーター', 'T.S']
 const schools = ['百鬼夜行', 'レッドウィンター', 'トリニティ', 'ゲヘナ', 'アビドス', 'ミレニアム', 'アリウス', '山海経', 'ヴァルキューレ', 'SRT', 'その他']
 const attackTypes = ['爆発', '貫通', '神秘', '振動']
+const modes = Object.freeze({ daily: 'デイリー', endless: 'エンドレス' });
 const same = 'same';
 const wrong = 'wrong';
 const before = 'より前';
@@ -20,7 +21,7 @@ const keyEndlessHighScore = 'Kivodle.Endless.HighScore';
 let target;
 let tries;
 let corrects = 0;
-let endlessModeFlg = false;
+let currentMode;
 let implementedStudents;
 let guesses = [];
 const judges = [];
@@ -33,6 +34,9 @@ function pageLoad() {
     implementedStudents = students.filter(student => {
         return guessDate(student.data.implementationDate, yesterdayStr) !== after;
     });
+
+    // ページを開いた時はモードをデイリーモードに設定
+    currentMode = modes.daily;
 
     setup();
 
@@ -91,10 +95,17 @@ function setup(nextFlg = false) {
     $('#infoButtonArea').remove();
 
     // モード別処理
-    if (endlessModeFlg) {
-        setupEndlessMode(nextFlg);
-    } else {
-        setupDailyMode();
+    switch (currentMode) {
+        case modes.daily:
+            setupDailyMode();
+            break;
+        case modes.endless:
+            setupEndlessMode(nextFlg);
+            break;
+        default:
+            currentMode = modes.daily;
+            setupDailyMode();
+            break;
     }
 
     // ロード後に解答回数を使い切っていない場合ボタンを有効化
@@ -170,25 +181,14 @@ function setTarget(seed) {
     target = implementedStudents[mt.nextInt(0, implementedStudents.length)];
 }
 
-// デイリーモードへの切り替え
-function switchDailyMode() {
-    if (!endlessModeFlg) {
-        // 既にデイリーモードの場合は何もしない
+// モードの切り替え
+function switchMode(targetMode) {
+    if (currentMode == targetMode) {
+        // 既に変更対象のモードなら何もしない
         return;
     }
 
-    endlessModeFlg = false;
-    setup();
-}
-
-// エンドレスモードへの切り替え
-function switchEndlessMode() {
-    if (endlessModeFlg) {
-        // 既にエンドレスモードの場合は何もしない
-        return;
-    }
-
-    endlessModeFlg = true;
+    currentMode = targetMode;
     setup();
 }
 
@@ -219,7 +219,14 @@ function answerProcess(guessedName, loadFlg = false) {
     // セーブデータのロード中でない場合、答えた生徒をセーブ
     if (!loadFlg) {
         guesses.push(guessedName);
-        setLocalStorage(endlessModeFlg ? keyEndlessGuesses : keyDailyGuesses, guesses)
+        switch (currentMode) {
+            case modes.daily:
+                setLocalStorage(keyDailyGuesses, guesses);
+                break;
+            case modes.endless:
+                setLocalStorage(keyEndlessGuesses, guesses);
+                break;
+        }
     }
 
     if (judgeObj.isHit === same || tries === maxTries) {
@@ -278,9 +285,9 @@ function endGame(isHit, loadFlg = false) {
     $('#infoArea').append($('<div>').attr('id', 'infoButtonArea'));
     $('#triesArea').html($('<div>').html(result));
 
-    if (!endlessModeFlg || (endlessModeFlg && isHit === wrong)) {
+    if (currentMode == modes.daily || (currentMode == modes.endless && isHit === wrong)) {
         // デイリーモードでゲーム終了した時とエンドレスモードで正解できなかった時の処理
-        const shareStr = endlessModeFlg ? createShareStrForEndless() : createShareStrForDaily(isHit);
+        const shareStr = currentMode == modes.endless ? createShareStrForEndless() : createShareStrForDaily(isHit);
         const encodedShareStr = encodeURIComponent(shareStr);
 
         $('#infoButtonArea').append($('<div>').attr('id', 'shareButtonArea'));
@@ -289,7 +296,7 @@ function endGame(isHit, loadFlg = false) {
         $('#shareButtonArea').append($('<button>').attr('id', 'misskeyButton').html('Misskeyでシェア'));
         $('#shareButtonArea').append($('<button>').attr('id', 'mastodonButton').html('Mastodonでシェア'));
 
-        if (endlessModeFlg) {
+        if (currentMode == modes.endless) {
             $('#infoButtonArea').append($('<div>').attr('id', 'retryButtonArea').css('margin-top', '5px'));
             $('#retryButtonArea').append($('<button>').attr('id', 'retryButton').html('最初から'));
             $('#retryButton').on('click', function () { setup() });
@@ -325,7 +332,7 @@ function endGame(isHit, loadFlg = false) {
         $('#mastodonButton').on('click', function () {
             window.open(`https://donshare.net/share.html?text=${encodedShareStr}&url=${location.href}`);
         });
-    } else {
+    } else if (currentMode == modes.endless) {
         // エンドレスモードで正解した時の処理
         if (!loadFlg) {
             setLocalStorage(keyEndlessCorrects, ++corrects);

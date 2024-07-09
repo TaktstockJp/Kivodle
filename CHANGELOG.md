@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Changed
+- モード管理方法をboolからstringとobjectを利用した方法に変更
+
+## [Unreleased]
 ### Added
 - 生徒の検索時にひらがなで検索できるように
 - Kivodleを初めて訪れる際、説明のモーダルが表示されるように
