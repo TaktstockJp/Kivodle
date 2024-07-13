@@ -174,6 +174,7 @@ function answerForLoad() {
 
 // スピードランモードセットアップ時の処理
 function setupSpeedrunMode() {
+    corrects = 0;
     setupDom();
     $('#guessArea').addClass('fold');
     $('#modeNameArea').html('スピードランモード');
@@ -243,6 +244,12 @@ function switchMode(targetMode) {
     if (currentMode == targetMode) {
         // 既に変更対象のモードなら何もしない
         return;
+    }
+
+    // スピードランモードのモード部分書き換えの解除
+    if (intervalId !== void 0) {
+        clearInterval(intervalId);
+        intervalId = void 0;
     }
 
     currentMode = targetMode;
