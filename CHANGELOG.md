@@ -1,7 +1,9 @@
 # CHANGELOG
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [1.2.0-20240710]
+### Added
+- スピードランモードの実装
 ### Changed
 - モード管理方法をboolからstringとobjectを利用した方法に変更
 

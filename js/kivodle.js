@@ -1,9 +1,10 @@
 const maxTries = 5;
+const speedrunMaxStreak = 10;
 const weapons = ['SG', 'SMG', 'AR', 'GL', 'HG', 'RL', 'SR', 'RG', 'MG', 'MT', 'FT']
 const classes = ['タンク', 'アタッカー', 'ヒーラー', 'サポーター', 'T.S']
 const schools = ['百鬼夜行', 'レッドウィンター', 'トリニティ', 'ゲヘナ', 'アビドス', 'ミレニアム', 'アリウス', '山海経', 'ヴァルキューレ', 'SRT', 'その他']
 const attackTypes = ['爆発', '貫通', '神秘', '振動']
-const modes = Object.freeze({ daily: 'デイリー', endless: 'エンドレス' });
+const modes = Object.freeze({ daily: 'デイリー', endless: 'エンドレス', speedrun: 'スピードラン' });
 const same = 'same';
 const wrong = 'wrong';
 const before = 'より前';
@@ -17,6 +18,7 @@ const keyEndlessTarget = 'Kivodle.Endless.Target';
 const keyEndlessGuesses = 'Kivodle.Endless.Guesses';
 const keyEndlessCorrects = 'Kivodle.Endless.Corrects';
 const keyEndlessHighScore = 'Kivodle.Endless.HighScore';
+const keySpeedrunHighScore = 'Kivodle.Speedrun.HighScore';
 
 let target;
 let tries;
@@ -24,6 +26,9 @@ let corrects = 0;
 let currentMode;
 let implementedStudents;
 let guesses = [];
+let speedrunStart;
+let speedrunSum;
+let intervalId;
 const judges = [];
 const now = getToday();
 
@@ -88,11 +93,7 @@ function setup(nextFlg = false) {
     // 変数とDOMの初期化
     guesses.splice(0);
     judges.splice(0);
-    setTriesAreaInGame();
-    $('#guessArea').removeClass('fold');
-    $('#infoArea').removeClass(same).removeClass(wrong);
-    $('#checkTableBody').empty();
-    $('#infoButtonArea').remove();
+    setupDom();
 
     // モード別処理
     switch (currentMode) {
@@ -102,6 +103,9 @@ function setup(nextFlg = false) {
         case modes.endless:
             setupEndlessMode(nextFlg);
             break;
+        case modes.speedrun:
+            setupSpeedrunMode();
+            break;
         default:
             currentMode = modes.daily;
             setupDailyMode();
@@ -110,6 +114,15 @@ function setup(nextFlg = false) {
 
     // ロード後に解答回数を使い切っていない場合ボタンを有効化
     if (tries < maxTries) { $("#buttonGuess").removeAttr('disabled'); }
+}
+
+function setupDom() {
+    setTriesAreaInGame();
+    $('#guessArea').removeClass('fold');
+    $('#infoArea').removeClass(same).removeClass(wrong);
+    $('#checkTableBody').empty();
+    $('#infoButtonArea').remove();
+    $("#buttonGuess").removeAttr('disabled');
 }
 
 // デイリーモードセットアップ時の処理
@@ -159,6 +172,39 @@ function answerForLoad() {
     });
 }
 
+// スピードランモードセットアップ時の処理
+function setupSpeedrunMode() {
+    setupDom();
+    $('#guessArea').addClass('fold');
+    $('#modeNameArea').html('スピードランモード');
+    $('#triesArea').empty();
+    $('#infoArea').append($('<div>').attr('id', 'infoButtonArea'));
+    $('#infoButtonArea').append($('<button>').attr('id', 'startButton').html('スタート'));
+    $('#startButton').on('click', function () { startSpeedrun(false) });
+    setWinStreakAreaForSpeedrun();
+}
+
+// スピードランの開始
+function startSpeedrun(nextFlg) {
+    // 解答回数の初期化
+    tries = 0;
+
+    // 正解の設定
+    setTarget(Date.now());
+
+    // 変数とDOMの初期化
+    guesses.splice(0);
+    judges.splice(0);
+    setupDom();
+    setTriesAreaInGame();
+
+    // タイマーの設定
+    if (!nextFlg) { speedrunSum = 0; }
+    speedrunStart = Date.now();
+    setModeInfoAreaForSpeedrunInGame(speedrunSum);
+    intervalId = setInterval(function () { setModeInfoAreaForSpeedrunInGame((speedrunSum + (Date.now() - speedrunStart))) }, 100);
+}
+
 // triesAreaの書き換え
 function setTriesAreaInGame() {
     $('#triesArea').html(`解答回数： ${tries} ／ ${maxTries}`);
@@ -172,6 +218,17 @@ function setModeInfoAreaForDaily() {
 function setModeInfoAreaForEndless() {
     $('#modeNameArea').html(`エンドレスモード<br>現在のスコア：${corrects}`);
     $('#modeWinStreakArea').html(`ハイスコア：${getLocalStorage(keyEndlessHighScore) || 0}`)
+}
+
+function setModeInfoAreaForSpeedrunInGame(millisecond) {
+    const totalSecond = Math.floor(millisecond / 1000);
+    const formattedTime = `${Math.floor(totalSecond / 60).toString().padStart(2, '0')}:${(totalSecond % 60).toString().padStart(2, '0')}`;
+    $('#modeNameArea').html(`スピードランモード<br>正解数　${corrects} ／ ${speedrunMaxStreak}<br>経過時間　${formattedTime}`);
+}
+
+function setWinStreakAreaForSpeedrun() {
+    const highScore = getLocalStorage(keySpeedrunHighScore);
+    $('#modeWinStreakArea').html(`ハイスコア：${highScore ? millisecondToEncodedStr(highScore) : '記録なし'}`);
 }
 
 // 解答を設定する
@@ -288,13 +345,7 @@ function endGame(isHit, loadFlg = false) {
     if (currentMode == modes.daily || (currentMode == modes.endless && isHit === wrong)) {
         // デイリーモードでゲーム終了した時とエンドレスモードで正解できなかった時の処理
         const shareStr = currentMode == modes.endless ? createShareStrForEndless() : createShareStrForDaily(isHit);
-        const encodedShareStr = encodeURIComponent(shareStr);
-
-        $('#infoButtonArea').append($('<div>').attr('id', 'shareButtonArea'));
-        $('#shareButtonArea').append($('<button>').attr('id', 'copyButton').html('コピー'));
-        $('#shareButtonArea').append($('<button>').attr('id', 'xButton').html('Xでシェア'));
-        $('#shareButtonArea').append($('<button>').attr('id', 'misskeyButton').html('Misskeyでシェア'));
-        $('#shareButtonArea').append($('<button>').attr('id', 'mastodonButton').html('Mastodonでシェア'));
+        insertShareButton(shareStr);
 
         if (currentMode == modes.endless) {
             $('#infoButtonArea').append($('<div>').attr('id', 'retryButtonArea').css('margin-top', '5px'));
@@ -316,22 +367,6 @@ function endGame(isHit, loadFlg = false) {
             }
             setModeInfoAreaForDaily();
         }
-
-        $('#copyButton').on('click', function () {
-            navigator.clipboard.writeText(`${shareStr}\n${location.href}`).then(
-                () => {
-                    $('#copyButton').html('コピーしました');
-                });
-        });
-        $('#xButton').on('click', function () {
-            window.open(`https://x.com/intent/tweet?text=${encodedShareStr}%0A&url=${location.href}`);
-        });
-        $('#misskeyButton').on('click', function () {
-            window.open(`https://misskey-hub.net/share/?text=${encodedShareStr}&url=${location.href}&visibility=public&localOnly=0`);
-        });
-        $('#mastodonButton').on('click', function () {
-            window.open(`https://donshare.net/share.html?text=${encodedShareStr}&url=${location.href}`);
-        });
     } else if (currentMode == modes.endless) {
         // エンドレスモードで正解した時の処理
         if (!loadFlg) {
@@ -343,6 +378,27 @@ function endGame(isHit, loadFlg = false) {
         }
         $('#infoButtonArea').append($('<button>').attr('id', 'nextButton').html('次の問題へ'));
         $('#nextButton').on('click', function () { setup(true) });
+    } else if (currentMode == modes.speedrun) {
+        // スピードランモード時の処理
+        speedrunSum += Date.now() - speedrunStart;
+        clearInterval(intervalId);
+        corrects = corrects + (isHit === same ? 1 : 0);
+        setModeInfoAreaForSpeedrunInGame(speedrunSum);
+        if (corrects >= speedrunMaxStreak) {
+            // 指定された問題数を解き終わった時
+            const encodedTime = millisecondToEncodedStr(speedrunSum);
+            $('#triesArea').append($('<div>').html(`全${speedrunMaxStreak}問正解するのにかかった時間は ${encodedTime} でした。`));
+
+            // ハイスコアの置き換えと表示
+            const highScore = getLocalStorage(keySpeedrunHighScore);
+            if (!highScore || speedrunSum < highScore) { setLocalStorage(keySpeedrunHighScore, speedrunSum) }
+            setWinStreakAreaForSpeedrun();
+            insertShareButton(createShareStrForSpeedrun(encodedTime));
+        } else {
+            // それ以外
+            $('#infoButtonArea').append($('<button>').attr('id', 'nextButton').html('次の問題へ'));
+            $('#nextButton').on('click', function () { startSpeedrun(true) });
+        }
     }
 }
 
@@ -370,6 +426,37 @@ function createShareStrForEndless() {
     return `#Kivodle のエンドレスモードで${corrects}問連続で正解しました！\n`;
 }
 
+// SNSでシェアする時の文章を作る（スピードランモード用）
+function createShareStrForSpeedrun(record) {
+    return `#Kivodle のスピードランモードで${speedrunMaxStreak}問正解するのにかかった時間は ${record} でした！\n`;
+}
+
+// シェアボタンをDOMに挿入する
+function insertShareButton(shareStr) {
+    const encodedShareStr = encodeURIComponent(shareStr);
+    $('#infoButtonArea').append($('<div>').attr('id', 'shareButtonArea'));
+    $('#shareButtonArea').append($('<button>').attr('id', 'copyButton').html('コピー'));
+    $('#shareButtonArea').append($('<button>').attr('id', 'xButton').html('Xでシェア'));
+    $('#shareButtonArea').append($('<button>').attr('id', 'misskeyButton').html('Misskeyでシェア'));
+    $('#shareButtonArea').append($('<button>').attr('id', 'mastodonButton').html('Mastodonでシェア'));
+
+    $('#copyButton').on('click', function () {
+        navigator.clipboard.writeText(`${shareStr}\n${location.href}`).then(
+            () => {
+                $('#copyButton').html('コピーしました');
+            });
+    });
+    $('#xButton').on('click', function () {
+        window.open(`https://x.com/intent/tweet?text=${encodedShareStr}%0A&url=${location.href}`);
+    });
+    $('#misskeyButton').on('click', function () {
+        window.open(`https://misskey-hub.net/share/?text=${encodedShareStr}&url=${location.href}&visibility=public&localOnly=0`);
+    });
+    $('#mastodonButton').on('click', function () {
+        window.open(`https://donshare.net/share.html?text=${encodedShareStr}&url=${location.href}`);
+    });
+}
+
 // 日付の前後判定
 function guessDate(targetImplDate, guessImplDate) {
     let targetArr = targetImplDate.split('/');
@@ -385,6 +472,11 @@ function guessDate(targetImplDate, guessImplDate) {
     }
 
     return same;
+}
+
+function millisecondToEncodedStr(millisecond) {
+    const totalSecond = Math.floor(millisecond / 1000);
+    return `${Math.floor(totalSecond / 60).toString().padStart(2, '0')}:${(totalSecond % 60).toString().padStart(2, '0')}.${(totalSecond % 1000).toString().padStart(3, '0')}`
 }
 
 function openModal() {
