@@ -1,6 +1,10 @@
 # CHANGELOG
 All notable changes to this project will be documented in this file.
 
+## [1.2.2-20240710]
+### Added
+- スピードランモードのゲーム終了時に「最初から」ボタンを追加
+
 ## [1.2.1-20240710]
 ### Fixed
 - スピードランモードで「スタート」押下後にモード遷移するとモード表示がスピードランモードのものに上書きされてしまう不具合の修正

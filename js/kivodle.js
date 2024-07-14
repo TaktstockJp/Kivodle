@@ -355,9 +355,7 @@ function endGame(isHit, loadFlg = false) {
         insertShareButton(shareStr);
 
         if (currentMode == modes.endless) {
-            $('#infoButtonArea').append($('<div>').attr('id', 'retryButtonArea').css('margin-top', '5px'));
-            $('#retryButtonArea').append($('<button>').attr('id', 'retryButton').html('最初から'));
-            $('#retryButton').on('click', function () { setup() });
+            insertRetryButton();
 
             // セーブデータ削除
             corrects = 0;
@@ -401,6 +399,7 @@ function endGame(isHit, loadFlg = false) {
             if (!highScore || speedrunSum < highScore) { setLocalStorage(keySpeedrunHighScore, speedrunSum) }
             setWinStreakAreaForSpeedrun();
             insertShareButton(createShareStrForSpeedrun(encodedTime));
+            insertRetryButton();
         } else {
             // それ以外
             $('#infoButtonArea').append($('<button>').attr('id', 'nextButton').html('次の問題へ'));
@@ -462,6 +461,12 @@ function insertShareButton(shareStr) {
     $('#mastodonButton').on('click', function () {
         window.open(`https://donshare.net/share.html?text=${encodedShareStr}&url=${location.href}`);
     });
+}
+
+function insertRetryButton() {
+    $('#infoButtonArea').append($('<div>').attr('id', 'retryButtonArea').css('margin-top', '5px'));
+    $('#retryButtonArea').append($('<button>').attr('id', 'retryButton').html('最初から'));
+    $('#retryButton').on('click', function () { setup() });
 }
 
 // 日付の前後判定
