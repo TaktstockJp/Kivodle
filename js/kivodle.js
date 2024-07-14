@@ -252,7 +252,7 @@ function prependTableRow(guessed, judgeObj) {
     const $newRow = $('<tr>');
     const cellBase = '<td></td>';
 
-    const $studentCell = $(cellBase).addClass(judgeObj.isHit).html(guessed.studentName);
+    const $studentCell = $(cellBase).addClass(judgeObj.isHit + ' studentNameCol').html(guessed.studentName);
     $newRow.append($studentCell);
     const $weaponCell = $(cellBase).addClass(judgeObj.isSameWeapon).html(weapons[guessed.data.weapon]);
     $newRow.append($weaponCell);

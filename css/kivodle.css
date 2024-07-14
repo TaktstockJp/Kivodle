@@ -51,16 +51,13 @@ body {
 }
 
 #logoArea {
-    position: relative;
-    height: 200px;
+    margin-bottom: 30px;
+	text-align: center;
 }
 
 #logo {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+    width: 100%;
+	max-width: 450px;
 }
 
 #infoArea {
@@ -93,6 +90,10 @@ body {
     text-align: center;
 }
 
+#checkArea {
+	overflow-x: auto;
+}
+
 #selectGuess {
     display: inline-block;
     border-radius: 5px;
@@ -119,6 +120,11 @@ table td {
     border: solid 1px #008f99;
 }
 
+table th, 
+table td:not(.studentNameCol) {
+	text-wrap: nowrap;
+}
+
 th {
     background-color: #a5f9ff;
 }
@@ -129,6 +135,8 @@ td {
 
 .studentNameCol {
     width: 24%;
+	position: sticky;
+	left: 5px;
 }
 
 .weaponTypeCol {
