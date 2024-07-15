@@ -1,10 +1,10 @@
 @media screen and (max-width: 960px) {
     #app {
-        width: 100%;
+        width: 100vw;
     }
 
     #modal {
-        width: 90%;
+        width: 90vw;
     }
 }
 
@@ -18,8 +18,29 @@
     }
 }
 
-body {
-    font-size: 1rem;
+@media screen and (max-width: 720px) {
+    #checkArea {
+        font-size: calc(100vw / 45);
+    }
+
+    .cell {
+        min-height: calc(100vw / 12);
+    }
+}
+
+@media screen and (min-width: 720px) {
+    #checkArea {
+        font-size: 16px;
+    }
+
+    .cell {
+        min-height: 60px;
+    }
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
 }
 
 #menuBar {
@@ -42,7 +63,7 @@ body {
 #menuBar a {
     display: block;
     color: white;
-    margin-right: 20px;
+    margin: 5px;
 }
 
 #app {
@@ -127,7 +148,6 @@ body {
 }
 
 .cell {
-    min-height: 60px;
     width: 100%;
 }
 
@@ -241,5 +261,5 @@ body {
 }
 
 .select2-results , .select2-results__options {
-    max-height: 500px !important;
+    max-height: 40vh !important;
 }
