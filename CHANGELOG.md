@@ -1,6 +1,10 @@
 # CHANGELOG
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### Fixed
+- 画面幅が小さい時にロゴが画面幅を越えないように修正
+
 ## [1.2.2-20240710]
 ### Added
 - スピードランモードのゲーム終了時に「最初から」ボタンを追加

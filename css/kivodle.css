@@ -51,16 +51,12 @@ body {
 }
 
 #logoArea {
-    position: relative;
-    height: 200px;
+    text-align: center;
 }
 
 #logo {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+    width: 100%;
+    max-width: 452px;
 }
 
 #infoArea {
