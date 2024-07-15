@@ -59,70 +59,91 @@
     <div id="modal">
         <div id="modalClose" onclick="closeModal();">×</div>
         <div id="modalInner">
-            <h2>Kivodleって何？</h2>
-            <p>
-                スマホゲーム「<a href="https://bluearchive.jp/">ブルーアーカイブ</a>」にプレイアブルとして登場する生徒（キャラクター）から１人が正解として選ばれるので、その生徒の特徴から推理しようというゲームです。
-            </p>
-            <h2>遊び方</h2>
-            <ol>
-                <li>プルダウンリストから生徒を１人選んで「解答」ボタンを押す。</li>
-                <li>
-                    選んだ生徒と正解の生徒との間で「武器種」「クラス」「学校」「攻撃属性」「実装日」の比較を行う。<br>
-                    一致している場合は<span class="same">緑背景</span>、そうでない場合は<span class="wrong">赤背景</span>になる。<br>
-                    さらに、実装日は正解の生徒の実装日が選んだ生徒の実装日より前か後かも表示される。<br>
-                </li>
-                <li>
-                    2.の内容をもとに推理して1.を行い、５回以内に正解の生徒を当てられればクリア。<br>
-                    そうでない場合はゲームオーバー。
-                </li>
-            </ol>
-            <h2>モードについて</h2>
-            <h3>デイリーモード</h3>
-            <p style="margin-bottom: 2px;">
-                日替わりで正解が変化します。正解は全ユーザーで共通です。<br>
-                正解が切り替わるタイミングは日本時間で午前4時（世界標準時で19時）です。<br>
-                本家Wordleのように結果をシェアできます。<br>
-                ゲームの途中でブラウザやタブを閉じても、その時に遊んでいたデータはブラウザに保存されます。
-            </p>
-            <h3>エンドレスモード</h3>
-            <p style="margin-bottom: 2px;">
-                遊ぶたびに正解が変化し、連続正解数が記録されます。<br>
-                不正解でゲームオーバーになった時、何回連続で正解できたかをシェアできます。<br>
-                ゲームの途中でブラウザやタブを閉じても、その時に遊んでいたデータはブラウザに保存されます。
-            </p>
-            <h3>スピードランモード</h3>
-            <p>
-                遊ぶたびに正解が変化し、10問正解するまでの時間が記録されます。<br>
-                不正解してもゲームオーバーになりません。<br>
-                正解または不正解の判定が出てから「次の問題へ」のボタンを押すまでの間の時間は記録されません。<br>
-                <span style="color: red;">このモードのみ、ゲームの途中でブラウザやタブを閉じると、その時点での結果は破棄されます。</span>
-            </p>
-            <h2>注意事項</h2>
-            <ul>
-                <li>更新履歴は<a href="https://github.com/TaktstockJp/Kivodle/blob/main/CHANGELOG.md">こちら</a>を参照してください。</li>
-                <li>2024/07/10現在、モエ（水着）のデータまで追加済みです。</li>
-                <li>新しい生徒はゲームで実装された日の翌日からリストに追加・正解として選ばれる対象になります。</li>
-                <li>コラボ生徒の「学校」は全員「その他」となります。</li>
-            </ul>
-            <h2>不具合報告等について</h2>
-            <p style="margin-bottom: 2px;">以下のいずれかにお願いします。</p>
-            <ul>
-                <li><a href="https://github.com/TaktstockJp/Kivodle/issues">GitHubのIssues</a></li>
-                <li><a href="https://misskey.io/@Taktstock_mov">作者のmisskey.ioアカウント</a></li>
-            </ul>
-            <h2>お借りしたものなど</h2>
-            <ul>
-                <li><a href="https://bluearchive.wikiru.jp/">ブルーアーカイブ（ブルアカ）攻略 Wiki</a>：生徒のデータを参照させていただきました。</li>
-                <li><a href="https://tmp.nulla.top/ba-logo/">BlueArchive-Style Logo Generator</a>：ロゴを生成して使用させていただきました。</li>
-                <li><a href="https://jquery.com/">jQuery</a></li>
-                <li><a href="https://magicant.github.io/sjavascript/mt.html">Mersenne Twister in JavaScript</a></li>
-                <li><a href="https://select2.org/">Select2</a></li>
-            </ul>
-            <h2>その他</h2>
-            <p>
-                KivodleははNexon、Nexon GamesおよびYostarとは一切関係ありません。当サイトで使用されている情報の所有権および著作権はそれぞれの権利者に帰属します。<br>
-                リポジトリは<a href="https://github.com/TaktstockJp/Kivodle">こちら</a>。ソースコードはMIT Licenseで提供されています。
-            </p>
+            <div>
+                <h2>Kivodleって何？</h2>
+                <p>
+                    スマホゲーム「<a
+                        href="https://bluearchive.jp/">ブルーアーカイブ</a>」にプレイアブルとして登場する生徒（キャラクター）から１人が正解として選ばれるので、その生徒の特徴から推理しようというゲームです。
+                </p>
+            </div>
+            <div>
+                <h2>遊び方</h2>
+                <ol>
+                    <li>プルダウンリストから生徒を１人選んで「解答」ボタンを押す。</li>
+                    <li>
+                        選んだ生徒と正解の生徒との間で「武器種」「クラス」「学校」「攻撃属性」「実装日」の比較を行う。<br>
+                        一致している場合は<span class="same">緑背景</span>、そうでない場合は<span class="wrong">赤背景</span>になる。<br>
+                        さらに、実装日は正解の生徒の実装日が選んだ生徒の実装日より前か後かも表示される。<br>
+                    </li>
+                    <li>
+                        2.の内容をもとに推理して1.を行い、５回以内に正解の生徒を当てられればクリア。<br>
+                        そうでない場合はゲームオーバー。
+                    </li>
+                </ol>
+            </div>
+            <div>
+                <h2>モードについて</h2>
+                <h3>デイリーモード</h3>
+                <p>
+                    日替わりで正解が変化します。正解は全ユーザーで共通です。<br>
+                    正解が切り替わるタイミングは日本時間で午前4時（世界標準時で19時）です。<br>
+                    本家Wordleのように結果をシェアできます。<br>
+                    ゲームの途中でブラウザやタブを閉じても、その時に遊んでいたデータはブラウザに保存されます。
+                </p>
+                <h3>エンドレスモード</h3>
+                <p>
+                    遊ぶたびに正解が変化し、連続正解数が記録されます。<br>
+                    不正解でゲームオーバーになった時、何回連続で正解できたかをシェアできます。<br>
+                    ゲームの途中でブラウザやタブを閉じても、その時に遊んでいたデータはブラウザに保存されます。
+                </p>
+                <h3>スピードランモード</h3>
+                <p>
+                    遊ぶたびに正解が変化し、10問正解するまでの時間が記録されます。<br>
+                    不正解してもゲームオーバーになりません。<br>
+                    正解または不正解の判定が出てから「次の問題へ」のボタンを押すまでの間の時間は記録されません。<br>
+                    <span style="color: red;">このモードのみ、ゲームの途中でブラウザやタブを閉じると、その時点での結果は破棄されます。</span>
+                </p>
+            </div>
+            <div>
+                <h2>注意事項</h2>
+                <ul>
+                    <li>更新履歴は<a href="https://github.com/TaktstockJp/Kivodle/blob/main/CHANGELOG.md">こちら</a>を参照してください。
+                    </li>
+                    <li>2024/07/10現在、モエ（水着）のデータまで追加済みです。</li>
+                    <li>新しい生徒はゲームで実装された日の翌日からリストに追加・正解として選ばれる対象になります。</li>
+                    <li>コラボ生徒の「学校」は全員「その他」となります。</li>
+                </ul>
+            </div>
+            <div>
+                <h2>不具合報告等について</h2>
+                <p style="margin-bottom: 2px;">以下のいずれかにお願いします。</p>
+                <ul>
+                    <li><a href="https://github.com/TaktstockJp/Kivodle/issues">GitHubのIssues</a></li>
+                    <li><a href="https://misskey.io/@Taktstock_mov">作者のmisskey.ioアカウント</a></li>
+                </ul>
+            </div>
+            <div>
+                <h2>お借りしたものなど</h2>
+                <ul>
+                    <li><a href="https://bluearchive.wikiru.jp/">ブルーアーカイブ（ブルアカ）攻略 Wiki</a>：生徒のデータを参照させていただきました。</li>
+                    <li><a href="https://tmp.nulla.top/ba-logo/">BlueArchive-Style Logo
+                            Generator</a>：ロゴを生成して使用させていただきました。</li>
+                    <li><a href="https://jquery.com/">jQuery</a></li>
+                    <li><a href="https://magicant.github.io/sjavascript/mt.html">Mersenne Twister in JavaScript</a></li>
+                    <li><a href="https://select2.org/">Select2</a></li>
+                </ul>
+            </div>
+            <div>
+                <h2>リポジトリ</h2>
+                <p>リポジトリは<a href="https://github.com/TaktstockJp/Kivodle">こちら</a>。ソースコードはMIT Licenseで提供されています。</p>
+            </div>
+            <div>
+                <h2>その他</h2>
+                <p>
+                    Kivodleは非公式であり、Nexon、Nexon GamesおよびYostarとは一切関係ありません。<br>
+                    当サイトで使用されている情報の所有権および著作権はそれぞれの権利者に帰属します。<br>
+                </p>
+            </div>
         </div>
     </div>
     <div id="modalOverlay" onclick="closeModal();"></div>

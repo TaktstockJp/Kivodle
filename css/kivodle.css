@@ -239,17 +239,8 @@
     margin: 30px;
 }
 
-#modalInner h2 {
-    margin-bottom: 2px;
-}
-
-#modalInner h3 {
-    margin-top: 2px;
-    margin-bottom: 2px;
-}
-
-#modalInner p, #modalInner ul, #modalInner ol {
-    margin-top: 2px;
+#modalInner div {
+    margin-bottom: 15px;
 }
 
 #modalInner ul, #modalInner ol {

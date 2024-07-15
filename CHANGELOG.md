@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
   - スマホなど横幅が狭い環境で閲覧した際テーブルの文字サイズとセルの高さを横幅に合わせて自動調整するように変更
   - プルダウンの高さの最大値を画面の高さに応じて調整するように変更
   - プルダウンエリアの左右のpaddingを削除
+  - モーダルの表示調整とtypoの修正
 ### Fixed
 - 画面幅が小さい時にロゴが画面幅を越えないように修正
 
