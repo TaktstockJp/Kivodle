@@ -61,6 +61,7 @@ body {
 
 #infoArea {
     text-align: center;
+    border-radius: 3px;
 }
 
 #modeInfoArea {
