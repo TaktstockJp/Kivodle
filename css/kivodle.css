@@ -100,51 +100,58 @@ body {
     width: 20%;
 }
 
-table {
-    border-collapse: separate;
-    border-spacing: 5px;
+#checkGrid {
+    display: grid;
+    grid-template-columns: 6fr 3fr 3fr 5fr 3fr 5fr;
+    gap: 2px;
+}
+
+.row, #checkGridHeader, #checkGridBody {
+    display: contents;
+}
+
+.header, .cell {
+    border-radius: 3px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.header {
+    background-color: #a5f9ff;
+    grid-row: 1;
+    font-weight: bold;
+}
+
+.cell {
+    min-height: 60px;
     width: 100%;
 }
 
-table th,
-table td {
-    border-radius: 3px;
-    text-align: center;
-    box-sizing: border-box;
-    padding: 5px 3px;
-    border: solid 1px #008f99;
-}
-
-th {
-    background-color: #a5f9ff;
-}
-
-td {
-    height: 60px;
-}
-
 .studentNameCol {
-    width: 24%;
+    grid-column: 1;
 }
 
 .weaponTypeCol {
-    width: 12%;
+    grid-column: 2;
 }
 
 .classCol {
-    width: 12%;
+    grid-column: 3;
 }
 
 .schoolCol {
-    width: 18%;
+    grid-column: 4;
 }
 
 .attackTypeCol {
-    width: 12%;
+    grid-column: 5;
 }
 
 .implDateCol {
-    width: 20%;
+    grid-column: 6;
 }
 
 .same {

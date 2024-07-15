@@ -120,7 +120,7 @@ function setupDom() {
     setTriesAreaInGame();
     $('#guessArea').removeClass('fold');
     $('#infoArea').removeClass(same).removeClass(wrong);
-    $('#checkTableBody').empty();
+    $('#checkGridBody').empty();
     $('#infoButtonArea').remove();
     $("#buttonGuess").removeAttr('disabled');
 }
@@ -319,25 +319,27 @@ function guess(guessed) {
 
 // テーブルに行を追加
 function prependTableRow(guessed, judgeObj) {
+    // セルを作成するヘルパー関数
+    function createCell(content, isCorrect, extraClasses) {
+        return $('<div>')
+            .addClass([isCorrect, 'cell', ...extraClasses])
+            .html(content);
+    }
+
     // 追加する行のHTMLの組み立て
-    const $newRow = $('<tr>');
-    const cellBase = '<td></td>';
+    const $newRow = $('<div>').addClass('row');
 
-    const $studentCell = $(cellBase).addClass(judgeObj.isHit).html(guessed.studentName);
-    $newRow.append($studentCell);
-    const $weaponCell = $(cellBase).addClass(judgeObj.isSameWeapon).html(weapons[guessed.data.weapon]);
-    $newRow.append($weaponCell);
-    const $classCell = $(cellBase).addClass(judgeObj.isSameClass).html(classes[guessed.data.class]);
-    $newRow.append($classCell);
-    const $schoolCell = $(cellBase).addClass(judgeObj.isSameSchool).html(schools[guessed.data.school]);
-    $newRow.append($schoolCell);
-    const $attackTypeCell = $(cellBase).addClass(judgeObj.isSameAttackType).html(attackTypes[guessed.data.attackType]);
-    $newRow.append($attackTypeCell);
-    const $implDateCell = $(cellBase).addClass(judgeObj.isSameImplDate == same ? same : wrong).html(guessed.data.implementationDate + (judgeObj.isSameImplDate == same ? '' : '<br>' + judgeObj.isSameImplDate));
-    $newRow.append($implDateCell);
+    $newRow.append(createCell(guessed.studentName, judgeObj.isHit, ['studentNameCol']));
+    $newRow.append(createCell(weapons[guessed.data.weapon], judgeObj.isSameWeapon, ['weaponTypeCol']));
+    $newRow.append(createCell(classes[guessed.data.class], judgeObj.isSameClass, ['classCol']));
+    $newRow.append(createCell(schools[guessed.data.school], judgeObj.isSameSchool, ['schoolCol']));
+    $newRow.append(createCell(attackTypes[guessed.data.attackType], judgeObj.isSameAttackType, ['attackTypeCol']));
+    const implDateContent = guessed.data.implementationDate + 
+                            (judgeObj.isSameImplDate === same ? '' : '<br>' + judgeObj.isSameImplDate);
+    $newRow.append(createCell(implDateContent, judgeObj.isSameImplDate === same ? same : wrong, ['implDateCol']));
 
-    // テーブルの一番上の行に追加
-    $('#checkTableBody').prepend($newRow);
+    // グリッドの一番上の行に追加
+    $('#checkGridBody').prepend($newRow);
 }
 
 // ゲーム終了時の処理

@@ -40,20 +40,20 @@
             <button id="buttonGuess" onclick="answerProcess($('#selectGuess').val())">解答</button>
         </div>
         <div id="checkArea">
-            <table id="checkTable">
-                <thead id="checkTableHeader">
-                    <tr>
-                        <th class="studentNameCol">キャラ名</th>
-                        <th class="weaponTypeCol">武器種</th>
-                        <th class="classCol">クラス</th>
-                        <th class="schoolCol">学校</th>
-                        <th class="attackTypeCol">攻撃属性</th>
-                        <th class="implDateCol">実装日</th>
-                    </tr>
-                </thead>
-                <tbody id="checkTableBody">
-                </tbody>
-            </table>
+            <div id="checkGrid">
+                <div id="checkGridHeader">
+                    <div class="row">
+                        <div class="header studentNameCol">キャラ名</div>
+                        <div class="header weaponTypeCol">武器種</div>
+                        <div class="header classCol">クラス</div>
+                        <div class="header schoolCol">学校</div>
+                        <div class="header attackTypeCol">攻撃属性</div>
+                        <div class="header implDateCol">実装日</div>
+                    </div>
+                </div>
+                <div id="checkGridBody">
+                </div>
+            </div>
         </div>
     </div>
     <div id="modal">

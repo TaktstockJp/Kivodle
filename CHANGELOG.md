@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Changed
+- テーブルを廃止してグリッドレイアウトを採用
 ### Fixed
 - 画面幅が小さい時にロゴが画面幅を越えないように修正
 
