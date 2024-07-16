@@ -35,9 +35,9 @@
             <div id="triesArea"></div>
         </div>
         <div id="guessArea">
-            <select id="selectGuess" style="width: 80%;">
+            <select id="selectGuess" style="width: calc(81% - 7px);">
             </select>
-            <button id="buttonGuess" onclick="answerProcess($('#selectGuess').val())">解答</button>
+            <div id="buttonGuess" class="btn btnYellow" onclick="answerProcess($('#selectGuess').val())"><div class="btnText">解答</div></div>
         </div>
         <div id="checkArea">
             <div id="checkGrid">

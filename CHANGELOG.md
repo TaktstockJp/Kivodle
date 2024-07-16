@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
   - プルダウンの高さの最大値を画面の高さに応じて調整するように変更
   - プルダウンエリアの左右のpaddingを削除
   - モーダルの表示調整とtypoの修正
+  - 画面の横幅が狭くなった時のボタンの並びが常に上2個下2個になるように変更
+  - ボタンのデザインをブルアカっぽい感じに
 ### Fixed
 - 画面幅が小さい時にロゴが画面幅を越えないように修正
 

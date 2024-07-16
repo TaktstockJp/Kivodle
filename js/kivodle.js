@@ -180,8 +180,7 @@ function setupSpeedrunMode() {
     $('#modeNameArea').html('スピードランモード');
     $('#triesArea').empty();
     $('#infoArea').append($('<div>').attr('id', 'infoButtonArea'));
-    $('#infoButtonArea').append($('<button>').attr('id', 'startButton').html('スタート'));
-    $('#startButton').on('click', function () { startSpeedrun(false) });
+    insertSingleButton('startButton', 'スタート', function () { startSpeedrun(false) })
     setWinStreakAreaForSpeedrun();
 }
 
@@ -334,8 +333,8 @@ function prependTableRow(guessed, judgeObj) {
     $newRow.append(createCell(classes[guessed.data.class], judgeObj.isSameClass, ['classCol']));
     $newRow.append(createCell(schools[guessed.data.school], judgeObj.isSameSchool, ['schoolCol']));
     $newRow.append(createCell(attackTypes[guessed.data.attackType], judgeObj.isSameAttackType, ['attackTypeCol']));
-    const implDateContent = guessed.data.implementationDate + 
-                            (judgeObj.isSameImplDate === same ? '' : '<br>' + judgeObj.isSameImplDate);
+    const implDateContent = guessed.data.implementationDate +
+        (judgeObj.isSameImplDate === same ? '' : '<br>' + judgeObj.isSameImplDate);
     $newRow.append(createCell(implDateContent, judgeObj.isSameImplDate === same ? same : wrong, ['implDateCol']));
 
     // グリッドの一番上の行に追加
@@ -383,8 +382,7 @@ function endGame(isHit, loadFlg = false) {
             }
             setModeInfoAreaForEndless();
         }
-        $('#infoButtonArea').append($('<button>').attr('id', 'nextButton').html('次の問題へ'));
-        $('#nextButton').on('click', function () { setup(true) });
+        insertSingleButton('nextButton', '次の問題へ', function () { setup(true) })
     } else if (currentMode == modes.speedrun) {
         // スピードランモード時の処理
         speedrunSum += Date.now() - speedrunStart;
@@ -404,8 +402,7 @@ function endGame(isHit, loadFlg = false) {
             insertRetryButton();
         } else {
             // それ以外
-            $('#infoButtonArea').append($('<button>').attr('id', 'nextButton').html('次の問題へ'));
-            $('#nextButton').on('click', function () { startSpeedrun(true) });
+            insertSingleButton('nextButton', '次の問題へ', function () { startSpeedrun(true) })
         }
     }
 }
@@ -441,34 +438,46 @@ function createShareStrForSpeedrun(record) {
 
 // シェアボタンをDOMに挿入する
 function insertShareButton(shareStr) {
+    // ボタンのdivを作るヘルパー関数
+    function addButtonDiv(id, text, url = null) {
+        $('#shareButtonArea').append(createButton(id, 'btnCyan', text));
+        if (url !== null) {
+            $(`#${id}`).on('click', function () {
+                window.open(url);
+            })
+        }
+    }
+
     const encodedShareStr = encodeURIComponent(shareStr);
     $('#infoButtonArea').append($('<div>').attr('id', 'shareButtonArea'));
-    $('#shareButtonArea').append($('<button>').attr('id', 'copyButton').html('コピー'));
-    $('#shareButtonArea').append($('<button>').attr('id', 'xButton').html('Xでシェア'));
-    $('#shareButtonArea').append($('<button>').attr('id', 'misskeyButton').html('Misskeyでシェア'));
-    $('#shareButtonArea').append($('<button>').attr('id', 'mastodonButton').html('Mastodonでシェア'));
+    addButtonDiv('copyButton', 'コピー');
+    addButtonDiv('xButton', 'Xでシェア', `https://x.com/intent/tweet?text=${encodedShareStr}%0A&url=${location.href}`);
+    addButtonDiv('misskeyButton', 'Misskeyでシェア', `https://misskey-hub.net/share/?text=${encodedShareStr}&url=${location.href}&visibility=public&localOnly=0`);
+    addButtonDiv('mastodonButton', 'Mastodonでシェア', `https://donshare.net/share.html?text=${encodedShareStr}&url=${location.href}`);
 
     $('#copyButton').on('click', function () {
         navigator.clipboard.writeText(`${shareStr}\n${location.href}`).then(
             () => {
-                $('#copyButton').html('コピーしました');
+                $('#copyButton').html($('<div>').addClass('btnText').html('コピーしました'));
+                setTimeout(function () {
+                    $('#copyButton').html($('<div>').addClass('btnText').html('コピー'));
+                }, 1000);
             });
-    });
-    $('#xButton').on('click', function () {
-        window.open(`https://x.com/intent/tweet?text=${encodedShareStr}%0A&url=${location.href}`);
-    });
-    $('#misskeyButton').on('click', function () {
-        window.open(`https://misskey-hub.net/share/?text=${encodedShareStr}&url=${location.href}&visibility=public&localOnly=0`);
-    });
-    $('#mastodonButton').on('click', function () {
-        window.open(`https://donshare.net/share.html?text=${encodedShareStr}&url=${location.href}`);
     });
 }
 
+function createButton(id, colorClass, text) {
+    return $('<div>').attr('id', id).addClass(['btn', colorClass]).html($('<div>').addClass('btnText').html(text))
+}
+
 function insertRetryButton() {
-    $('#infoButtonArea').append($('<div>').attr('id', 'retryButtonArea').css('margin-top', '5px'));
-    $('#retryButtonArea').append($('<button>').attr('id', 'retryButton').html('最初から'));
-    $('#retryButton').on('click', function () { setup() });
+    insertSingleButton('retryButton', '最初から', function () { setup() })
+}
+
+function insertSingleButton(id, text, triggered) {
+    $('#infoButtonArea').append($('<div>').attr('id', 'singleButtonArea'));
+    $('#singleButtonArea').append(createButton(id, 'btnYellow', text));
+    $(`#${id}`).on('click', function () { triggered() });
 }
 
 // 日付の前後判定

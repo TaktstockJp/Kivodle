@@ -26,6 +26,10 @@
     .cell {
         min-height: calc(100vw / 12);
     }
+
+    #shareButtonArea {
+        grid-template-columns: repeat(2, 160px);
+    }
 }
 
 @media screen and (min-width: 720px) {
@@ -35,6 +39,10 @@
 
     .cell {
         min-height: 60px;
+    }
+
+    #shareButtonArea {
+        grid-template-columns: repeat(4, 160px);
     }
 }
 
@@ -118,8 +126,40 @@
 }
 
 #buttonGuess {
-    margin-right: auto;
-    width: 20%;
+    margin: 0 3.5px;
+    width: 19%;
+    min-width: 48px;
+}
+
+.btn {
+    transform: skew(-15deg);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 1s ease-in-out;
+}
+
+.btnYellow {
+    background-color: rgb(245, 233, 75);
+    color: rgb(75, 33, 22);
+}
+
+.btnCyan {
+    background-color: rgb(117, 220, 255);
+    color: rgb(45, 70, 99);
+}
+
+.btn:active {
+    scale: 0.98;
+}
+
+.btnText {
+    transform: skew(15deg);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    height: 100%;
 }
 
 #checkGrid {
@@ -188,9 +228,33 @@
     height: 0px;
 }
 
-#infoButtonArea button {
+#infoButtonArea {
+    display: flex;
+    flex-flow: column;
+}
+
+#infoButtonArea .btn {
     margin: 5px;
-    width: 140px;
+    width: 160px;
+    height: 28px;
+}
+
+#shareButtonArea {
+    display: grid;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+#shareButtonArea .btn {
+    margin: 0;
+}
+
+#singleButtonArea {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 #modal, #modalOverlay {
