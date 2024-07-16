@@ -1,10 +1,10 @@
 @media screen and (max-width: 960px) {
     #app {
-        width: 100%;
+        width: 100vw;
     }
 
     #modal {
-        width: 90%;
+        width: 90vw;
     }
 }
 
@@ -18,8 +18,37 @@
     }
 }
 
-body {
-    font-size: 1rem;
+@media screen and (max-width: 720px) {
+    #checkArea {
+        font-size: calc(100vw / 45);
+    }
+
+    .cell {
+        min-height: calc(100vw / 12);
+    }
+
+    #shareButtonArea {
+        grid-template-columns: repeat(2, 160px);
+    }
+}
+
+@media screen and (min-width: 720px) {
+    #checkArea {
+        font-size: 16px;
+    }
+
+    .cell {
+        min-height: 60px;
+    }
+
+    #shareButtonArea {
+        grid-template-columns: repeat(4, 160px);
+    }
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
 }
 
 #menuBar {
@@ -42,7 +71,7 @@ body {
 #menuBar a {
     display: block;
     color: white;
-    margin-right: 20px;
+    margin: 5px;
 }
 
 #app {
@@ -51,20 +80,17 @@ body {
 }
 
 #logoArea {
-    position: relative;
-    height: 200px;
+    text-align: center;
 }
 
 #logo {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+    width: 100%;
+    max-width: 452px;
 }
 
 #infoArea {
     text-align: center;
+    border-radius: 3px;
 }
 
 #modeInfoArea {
@@ -88,7 +114,7 @@ body {
     flex-wrap: nowrap;
     width: 100%;
     margin: 0 auto;
-    padding: 5px;
+    padding: 5px 0;
     box-sizing: border-box;
     text-align: center;
 }
@@ -100,55 +126,93 @@ body {
 }
 
 #buttonGuess {
-    margin-right: auto;
-    width: 20%;
+    margin: 0 3.5px;
+    width: 19%;
+    min-width: 48px;
 }
 
-table {
-    border-collapse: separate;
-    border-spacing: 5px;
+.btn {
+    transform: skew(-15deg);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 1s ease-in-out;
+}
+
+.btnYellow {
+    background-color: rgb(245, 233, 75);
+    color: rgb(75, 33, 22);
+}
+
+.btnCyan {
+    background-color: rgb(117, 220, 255);
+    color: rgb(45, 70, 99);
+}
+
+.btn:active {
+    scale: 0.98;
+}
+
+.btnText {
+    transform: skew(15deg);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+#checkGrid {
+    display: grid;
+    grid-template-columns: 6fr 3fr 3fr 5fr 3fr 5fr;
+    gap: 2px;
+}
+
+.row, #checkGridHeader, #checkGridBody {
+    display: contents;
+}
+
+.header, .cell {
+    border-radius: 3px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.header {
+    background-color: #a5f9ff;
+    grid-row: 1;
+    font-weight: bold;
+}
+
+.cell {
     width: 100%;
 }
 
-table th,
-table td {
-    border-radius: 3px;
-    text-align: center;
-    box-sizing: border-box;
-    padding: 5px 3px;
-    border: solid 1px #008f99;
-}
-
-th {
-    background-color: #a5f9ff;
-}
-
-td {
-    height: 60px;
-}
-
 .studentNameCol {
-    width: 24%;
+    grid-column: 1;
 }
 
 .weaponTypeCol {
-    width: 12%;
+    grid-column: 2;
 }
 
 .classCol {
-    width: 12%;
+    grid-column: 3;
 }
 
 .schoolCol {
-    width: 18%;
+    grid-column: 4;
 }
 
 .attackTypeCol {
-    width: 12%;
+    grid-column: 5;
 }
 
 .implDateCol {
-    width: 20%;
+    grid-column: 6;
 }
 
 .same {
@@ -164,9 +228,33 @@ td {
     height: 0px;
 }
 
-#infoButtonArea button {
+#infoButtonArea {
+    display: flex;
+    flex-flow: column;
+}
+
+#infoButtonArea .btn {
     margin: 5px;
-    width: 140px;
+    width: 160px;
+    height: 28px;
+}
+
+#shareButtonArea {
+    display: grid;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+#shareButtonArea .btn {
+    margin: 0;
+}
+
+#singleButtonArea {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 #modal, #modalOverlay {
@@ -215,17 +303,8 @@ td {
     margin: 30px;
 }
 
-#modalInner h2 {
-    margin-bottom: 2px;
-}
-
-#modalInner h3 {
-    margin-top: 2px;
-    margin-bottom: 2px;
-}
-
-#modalInner p, #modalInner ul, #modalInner ol {
-    margin-top: 2px;
+#modalInner div {
+    margin-bottom: 15px;
 }
 
 #modalInner ul, #modalInner ol {
@@ -237,5 +316,5 @@ td {
 }
 
 .select2-results , .select2-results__options {
-    max-height: 500px !important;
+    max-height: 40vh !important;
 }
