@@ -133,6 +133,7 @@
 
 .btn {
     transform: skew(-15deg);
+    border: none;
     border-radius: 5px;
     display: flex;
     justify-content: center;
@@ -156,6 +157,7 @@
 
 .btnText {
     transform: skew(15deg);
+    font-size: 1rem;
     font-weight: bold;
     display: flex;
     align-items: center;
