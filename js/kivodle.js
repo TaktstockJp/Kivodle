@@ -467,7 +467,7 @@ function insertShareButton(shareStr) {
 }
 
 function createButton(id, colorClass, text) {
-    return $('<div>').attr('id', id).addClass(['btn', colorClass]).html($('<div>').addClass('btnText').html(text))
+    return $('<button>').attr('id', id).addClass(['btn', colorClass]).html($('<div>').addClass('btnText').html(text))
 }
 
 function insertRetryButton() {
