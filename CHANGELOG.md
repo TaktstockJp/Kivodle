@@ -1,7 +1,10 @@
 # CHANGELOG
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [1.3.0-20240729]
+### Added
+- 2024/07/29実装分までの生徒データ（臨戦ホシノ、シロコ＊テラー、水着アツコ、水着サオリ、水着ヒヨリ、水着サオリ、水着ヒヨリ）追加
+
 ### Changed
 - レイアウトの調整
   - デフォルトのmarginとpaddingを0に
@@ -12,8 +15,10 @@ All notable changes to this project will be documented in this file.
   - モーダルの表示調整とtypoの修正
   - 画面の横幅が狭くなった時のボタンの並びが常に上2個下2個になるように変更
   - ボタンのデザインをブルアカっぽい感じに
+- クラス判定のロジックを変更し、1人の生徒が2つ以上のクラスを持てるように（臨戦ホシノ用の処理）
 ### Fixed
 - 画面幅が小さい時にロゴが画面幅を越えないように修正
+- ボタンデザイン変更時にTabでボタンをフォーカスできなかった不具合の修正
 
 ## [1.2.2-20240710]
 ### Added
