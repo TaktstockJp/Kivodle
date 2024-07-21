@@ -1,9 +1,9 @@
 const maxTries = 5;
 const speedrunMaxStreak = 10;
-const weapons = ['SG', 'SMG', 'AR', 'GL', 'HG', 'RL', 'SR', 'RG', 'MG', 'MT', 'FT']
-const classes = ['タンク', 'アタッカー', 'ヒーラー', 'サポーター', 'T.S']
-const schools = ['百鬼夜行', 'レッドウィンター', 'トリニティ', 'ゲヘナ', 'アビドス', 'ミレニアム', 'アリウス', '山海経', 'ヴァルキューレ', 'SRT', 'その他']
-const attackTypes = ['爆発', '貫通', '神秘', '振動']
+const weapons = Object.freeze(['SG', 'SMG', 'AR', 'GL', 'HG', 'RL', 'SR', 'RG', 'MG', 'MT', 'FT']);
+const classes = Object.freeze({ 0b00001: 'タンク', 0b00010: 'アタッカー', 0b00100: 'ヒーラー', 0b01000: 'サポーター', 0b10000: 'T.S' });
+const schools = Object.freeze(['百鬼夜行', 'レッドウィンター', 'トリニティ', 'ゲヘナ', 'アビドス', 'ミレニアム', 'アリウス', '山海経', 'ヴァルキューレ', 'SRT', 'その他']);
+const attackTypes = Object.freeze(['爆発', '貫通', '神秘', '振動']);
 const modes = Object.freeze({ daily: 'デイリー', endless: 'エンドレス', speedrun: 'スピードラン' });
 const same = 'same';
 const wrong = 'wrong';
@@ -304,16 +304,17 @@ function answerProcess(guessedName, loadFlg = false) {
 
 // 各要素ごとの正誤判定
 function guess(guessed) {
-    const judgeObj = {
-        isHit: target.studentName === guessed.studentName ? same : wrong,
-        isSameWeapon: target.data.weapon === guessed.data.weapon ? same : wrong,
-        isSameClass: target.data.class === guessed.data.class ? same : wrong,
-        isSameSchool: target.data.school === guessed.data.school ? same : wrong,
-        isSameAttackType: target.data.attackType === guessed.data.attackType ? same : wrong,
+    const judgeSameOrWrong = (a, b) => a === b ? same : wrong;
+    const judgeSameOrWrongBitwise = (a, b) => (a & b) !== 0 ? same : wrong;
+
+    return {
+        isHit: judgeSameOrWrong(target.studentName, guessed.studentName),
+        isSameWeapon: judgeSameOrWrong(target.data.weapon, guessed.data.weapon),
+        isSameClass: judgeSameOrWrongBitwise(target.data.class, guessed.data.class),
+        isSameSchool: judgeSameOrWrong(target.data.school, guessed.data.school),
+        isSameAttackType: judgeSameOrWrong(target.data.attackType, guessed.data.attackType),
         isSameImplDate: guessDate(target.data.implementationDate, guessed.data.implementationDate)
     };
-
-    return judgeObj;
 }
 
 // テーブルに行を追加
@@ -325,12 +326,24 @@ function prependTableRow(guessed, judgeObj) {
             .html(content);
     }
 
+    // クラスを表すビットからクラスの文字列を生成するヘルパー関数
+    function getClassStr(classBit) {
+        let classStrings = [];
+        for (let key in classes) {
+            if ((key & classBit) !== 0) {
+                classStrings.push(classes[key]);
+            }
+        }
+    
+        return classStrings.join('<br>');
+    }
+
     // 追加する行のHTMLの組み立て
     const $newRow = $('<div>').addClass('row');
 
     $newRow.append(createCell(guessed.studentName, judgeObj.isHit, ['studentNameCol']));
     $newRow.append(createCell(weapons[guessed.data.weapon], judgeObj.isSameWeapon, ['weaponTypeCol']));
-    $newRow.append(createCell(classes[guessed.data.class], judgeObj.isSameClass, ['classCol']));
+    $newRow.append(createCell(getClassStr(guessed.data.class), judgeObj.isSameClass, ['classCol']));
     $newRow.append(createCell(schools[guessed.data.school], judgeObj.isSameSchool, ['schoolCol']));
     $newRow.append(createCell(attackTypes[guessed.data.attackType], judgeObj.isSameAttackType, ['attackTypeCol']));
     const implDateContent = guessed.data.implementationDate +
@@ -516,6 +529,7 @@ function convertToHiragana(src) {
     const replaceDic = {
         '（': '',
         '）': '',
+        '＊': '',
         '正月': 'しょうがつ',
         '水着': 'みずぎ',
         '私服': 'しふく',
@@ -523,6 +537,7 @@ function convertToHiragana(src) {
         '幼女': 'ようじょ',
         '体操服': 'たいそうふく',
         '応援団': 'おうえんだん',
+        '臨戦': 'りんせん',
         '御坂美琴': 'みさかみこと',
         '佐天涙子': 'さてんるいこ',
         '食蜂操祈': 'しょくほうみさき',
