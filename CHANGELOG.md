@@ -1,6 +1,10 @@
 # CHANGELOG
 All notable changes to this project will be documented in this file.
 
+## [1.3.1-20240729]
+### Fixed
+- エンドレスモードの正解をLocalStorageからロードする際にバージョンをまたいでいるとクラスの値が想定と異なる不具合の修正
+
 ## [1.3.0-20240729]
 ### Added
 - 2024/07/29実装分までの生徒データ（臨戦ホシノ、シロコ＊テラー、水着アツコ、水着サオリ、水着ヒヨリ、水着サオリ、水着ヒヨリ）追加

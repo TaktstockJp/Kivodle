@@ -157,7 +157,7 @@ function setupEndlessMode(nextFlg) {
         removeLocalStorage(keyEndlessGuesses);
     } else {
         // エンドレスモードのセーブデータのロード時
-        target = lastTarget;
+        target = implementedStudents.find((elm) => elm.studentName === lastTarget.studentName);
         guesses = getLocalStorage(keyEndlessGuesses) || [];
         corrects = getLocalStorage(keyEndlessCorrects) || 0;
         answerForLoad();
