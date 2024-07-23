@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [1.3.1-20240729]
+### Added
+- SEO対策
+
 ### Fixed
 - エンドレスモードの正解をLocalStorageからロードする際にバージョンをまたいでいるとクラスの値が想定と異なる不具合の修正
 

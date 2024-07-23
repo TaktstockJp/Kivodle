@@ -334,7 +334,7 @@ function prependTableRow(guessed, judgeObj) {
                 classStrings.push(classes[key]);
             }
         }
-    
+
         return classStrings.join('<br>');
     }
 
