@@ -4,6 +4,17 @@
     <title>Kivodle</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO対策 -->
+    <meta name="description" content="ブルーアーカイブの生徒を当てるWordle風ゲーム">
+    <meta name="keywords" content="ブルーアーカイブ, Blue Archive, Wordle">
+    <meta name="author" content="TaktstockJP">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Kivodle">
+    <meta property="og:description" content="ブルーアーカイブの生徒を当てるWordle風ゲーム">
+    <meta property="og:image" content="https://taktstockjp.github.io/Kivodle/resource/logo.png">
+    <meta property="og:url" content="https://taktstockjp.github.io/Kivodle/">
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://magicant.github.io/sjavascript/mt.js"></script>
@@ -37,7 +48,9 @@
         <div id="guessArea">
             <select id="selectGuess" style="width: calc(81% - 7px);">
             </select>
-            <button id="buttonGuess" class="btn btnYellow" onclick="answerProcess($('#selectGuess').val())"><div class="btnText">解答</div></button>
+            <button id="buttonGuess" class="btn btnYellow" onclick="answerProcess($('#selectGuess').val())">
+                <div class="btnText">解答</div>
+            </button>
         </div>
         <div id="checkArea">
             <div id="checkGrid">
