@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <title>Kivodle(Name Mode)</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO対策 -->
+    <meta name="description" content="ブルーアーカイブの生徒の名前を当てるWordle風ゲーム">
+    <meta name="keywords" content="ブルーアーカイブ, Blue Archive, Wordle">
+    <meta name="author" content="TaktstockJP">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Kivodle Name Mode">
+    <meta property="og:description" content="ブルーアーカイブの生徒の名前を当てるWordle風ゲーム">
+    <meta property="og:image" content="https://taktstockjp.github.io/Kivodle/resource/logo.png">
+    <meta property="og:url" content="https://taktstockjp.github.io/Kivodle/">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://magicant.github.io/sjavascript/mt.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="./js/name.js"></script>
+    <script src="./js/students.js"></script>
+    <link rel="stylesheet" href="css/name.css" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        <div id="checkArea">
+            <div id="checkGrid">
+                <div id="checkGridHeader">
+                    <div class="header longHeader">名前</div>
+                    <div class="header shortHeader">文字数</div>
+                </div>
+                <div id="checkGridBody">
+                </div>
+            </div>
+        </div>
+        <div id="guessArea">
+            <input id="guessInput">
+            <button id="submitInput" onclick="guess($('#guessInput').val())">解答</button>
+        </div>
+    </div>
+</body>
+
+</html>

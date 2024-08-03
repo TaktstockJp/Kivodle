@@ -1,0 +1,75 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+#app {
+    margin: 0 auto;
+    width: 480px;
+}
+
+#checkGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 5px;
+    margin: 0 auto;
+}
+
+.row,
+#checkGridHeader,
+#checkGridBody {
+    display: contents;
+}
+
+.header,
+.cell {
+    border-radius: 3px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.header {
+    background-color: #a5f9ff;
+    grid-row: 1;
+    font-weight: bold;
+}
+
+.longHeader {
+    grid-column: 1 / 5;
+}
+
+.shortHeader {
+    grid-column: 5 / 6;
+}
+
+.cell {
+    aspect-ratio: 1 / 1;
+}
+
+#guessArea {
+    display: flex;
+    box-sizing: border-box;
+}
+
+#guessInput {
+    width: 80%;
+}
+
+#submitInput {
+    width: 20%;
+}
+
+.same {
+    background-color: #aaffaa;
+}
+
+.near {
+    background-color: #cccc00;
+}
+
+.wrong {
+    background-color: #a3a3a3;
+}
