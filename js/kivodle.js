@@ -512,7 +512,7 @@ function guessDate(targetImplDate, guessImplDate) {
 
 function millisecondToEncodedStr(millisecond) {
     const totalSecond = Math.floor(millisecond / 1000);
-    return `${Math.floor(totalSecond / 60).toString().padStart(2, '0')}:${(totalSecond % 60).toString().padStart(2, '0')}.${(totalSecond % 1000).toString().padStart(3, '0')}`
+    return `${Math.floor(totalSecond / 60).toString().padStart(2, '0')}:${(totalSecond % 60).toString().padStart(2, '0')}.${(millisecond % 1000).toString().padStart(3, '0')}`
 }
 
 function openModal() {
