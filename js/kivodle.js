@@ -321,9 +321,11 @@ function guess(guessed) {
 function prependTableRow(guessed, judgeObj) {
     // セルを作成するヘルパー関数
     function createCell(content, isCorrect, extraClasses) {
-        return $('<div>')
-            .addClass([isCorrect, 'cell', ...extraClasses])
-            .html(content);
+        const cell = $('<div>').addClass('cell');
+        cell.append($('<div>').addClass('front'));
+        cell.append($('<div>').addClass(['back', 'flipped', isCorrect, ...extraClasses]).html(content));
+
+        return cell;
     }
 
     // クラスを表すビットからクラスの文字列を生成するヘルパー関数
@@ -352,6 +354,13 @@ function prependTableRow(guessed, judgeObj) {
 
     // グリッドの一番上の行に追加
     $('#checkGridBody').prepend($newRow);
+
+    // セルのアニメーション
+    $.each($($newRow).children(), function(i, val) {
+        setTimeout(function() {
+            $(val).children().toggleClass('flipped');
+        }, 10);
+    });
 }
 
 // ゲーム終了時の処理
