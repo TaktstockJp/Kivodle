@@ -308,7 +308,7 @@ function answerProcess(guessedName, loadFlg = false) {
 
         // スピードランモードの場合、1秒後にモード部分書き換えの再有効化
         // アニメーションの時間を合計時間から除く
-        setTimeout(function() {
+        setTimeout(function () {
             intervalId = setInterval(function () {
                 setModeInfoAreaForSpeedrunInGame((speedrunSum + (Date.now() - speedrunStart - (tries * 1000))))
             }, 100);
@@ -370,8 +370,8 @@ function prependTableRow(guessed, judgeObj) {
     $('#checkGridBody').prepend($newRow);
 
     // セルのアニメーション設定
-    $.each($($newRow).children(), function(i, val) {
-        setTimeout(function() {
+    $.each($($newRow).children(), function (i, val) {
+        setTimeout(function () {
             $(val).children().toggleClass('flipped');
         }, currentMode == modes.daily ? 10 + 350 * i : 10);
     });
