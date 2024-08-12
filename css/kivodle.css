@@ -219,12 +219,6 @@
     background-color: #a5f9ff;
 }
 
-.containedImage {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
 .studentNameCol {
     grid-column: 1;
 }
