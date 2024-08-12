@@ -306,13 +306,15 @@ function answerProcess(guessedName, loadFlg = false) {
         setTriesAreaInGame();
         $("#buttonGuess").removeAttr('disabled');
 
-        // スピードランモードの場合、1秒後にモード部分書き換えの再有効化
-        // アニメーションの時間を合計時間から除く
-        setTimeout(function () {
-            intervalId = setInterval(function () {
-                setModeInfoAreaForSpeedrunInGame((speedrunSum + (Date.now() - speedrunStart - (tries * 1000))))
-            }, 100);
-        }, 1000);
+        if (currentMode == modes.speedrun) {
+            // スピードランモードの場合、1秒後にモード部分書き換えの再有効化
+            // アニメーションの時間を合計時間から除く
+            setTimeout(function () {
+                intervalId = setInterval(function () {
+                    setModeInfoAreaForSpeedrunInGame((speedrunSum + (Date.now() - speedrunStart - (tries * 1000))))
+                }, 100);
+            }, 1000);
+        }
     }
 }
 
