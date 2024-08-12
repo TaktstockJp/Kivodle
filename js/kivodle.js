@@ -355,11 +355,11 @@ function prependTableRow(guessed, judgeObj) {
     // グリッドの一番上の行に追加
     $('#checkGridBody').prepend($newRow);
 
-    // セルのアニメーション
+    // セルのアニメーション設定
     $.each($($newRow).children(), function(i, val) {
         setTimeout(function() {
             $(val).children().toggleClass('flipped');
-        }, 10);
+        }, currentMode == modes.daily ? 10 + 350 * i : 10);
     });
 }
 
