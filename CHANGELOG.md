@@ -1,6 +1,16 @@
 # CHANGELOG
 All notable changes to this project will be documented in this file.
 
+The format is based on [Keep a Changelog](http://keepachangelog.com/).
+The first part of the version number follows [Semantic Versioning](http://semver.org/).
+The latter part of the version number indicates the latest implementation date among the students at that time.
+
+## [Unreleased]
+### Changed
+- セルがアニメーションするように変更
+  - セルのアニメーションを考慮してグリッドのUIを少し変更
+  - スピードランモードの場合、セルのアニメーション時間（解答ボタンを押してから1秒間）は時間が加算されない
+
 ## [1.3.1-20240729]
 ### Added
 - SEO対策

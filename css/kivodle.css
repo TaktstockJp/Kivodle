@@ -167,7 +167,7 @@
 #checkGrid {
     display: grid;
     grid-template-columns: 6fr 3fr 3fr 5fr 3fr 5fr;
-    gap: 2px;
+    gap: 3px;
 }
 
 .row,
@@ -193,7 +193,30 @@
 }
 
 .cell {
+    position: relative;
     width: 100%;
+    height: 100%;
+}
+
+.flipped {
+    transform: rotateY(-180deg);
+}
+
+.front,
+.back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 1s;
+    border-radius: 3px;
+}
+
+.front {
+    background-color: #a5f9ff;
 }
 
 .studentNameCol {
