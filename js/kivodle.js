@@ -260,6 +260,12 @@ function answerProcess(guessedName, loadFlg = false) {
     // ボタンを無効化
     $("#buttonGuess").attr('disabled', '');
 
+    // スピードランモードのモード部分書き換えの解除
+    if (intervalId !== void 0) {
+        clearInterval(intervalId);
+        intervalId = void 0;
+    }
+
     // 引数として渡された名前から解答として選ばれた生徒のオブジェクトを取得
     const guessed = implementedStudents.find(s => s.studentName === guessedName);
 
@@ -299,6 +305,14 @@ function answerProcess(guessedName, loadFlg = false) {
         // ゲームが途中の場合解答回数表示の更新とボタンの再有効化
         setTriesAreaInGame();
         $("#buttonGuess").removeAttr('disabled');
+
+        // スピードランモードの場合、1秒後にモード部分書き換えの再有効化
+        // アニメーションの時間を合計時間から除く
+        setTimeout(function() {
+            intervalId = setInterval(function () {
+                setModeInfoAreaForSpeedrunInGame((speedrunSum + (Date.now() - speedrunStart - (tries * 1000))))
+            }, 100);
+        }, 1000);
     }
 }
 
@@ -407,8 +421,7 @@ function endGame(isHit, loadFlg = false) {
         insertSingleButton('nextButton', '次の問題へ', function () { setup(true) })
     } else if (currentMode == modes.speedrun) {
         // スピードランモード時の処理
-        speedrunSum += Date.now() - speedrunStart;
-        clearInterval(intervalId);
+        speedrunSum += Date.now() - speedrunStart - ((tries - 1) * 1000);
         corrects = corrects + (isHit === same ? 1 : 0);
         setModeInfoAreaForSpeedrunInGame(speedrunSum);
         if (corrects >= speedrunMaxStreak) {
