@@ -5,9 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 The first part of the version number follows [Semantic Versioning](http://semver.org/).
 The latter part of the version number indicates the latest implementation date among the students at that time.
 
-## [1.3.2-20240925]
+## [1.3.3-20240925]
 ### Added
 - 20240925実装分までの生徒データ（キサキ、レイジョ）追加
+- Twitterカードの追加
 
 ## [1.3.2-20240821]
 ### Added
