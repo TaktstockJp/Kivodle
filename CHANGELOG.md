@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 The first part of the version number follows [Semantic Versioning](http://semver.org/).
 The latter part of the version number indicates the latest implementation date among the students at that time.
 
+## [Unreleased]
+### Added
+- 20241023実装分までの生徒データ（アイドルサクラコ、アイドルマリー、アイドルミネ）追加
+### Changed
+- プルダウン中の生徒の並び順を「生徒名」→「生徒のバリエーションの実装順」の2段階でソートしたものに変更
+
 ## [1.3.3-20240925]
 ### Added
 - 20240925実装分までの生徒データ（キサキ、レイジョ）追加
