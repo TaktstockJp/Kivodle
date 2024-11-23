@@ -5,7 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 The first part of the version number follows [Semantic Versioning](http://semver.org/).
 The latter part of the version number indicates the latest implementation date among the students at that time.
 
-## [Unreleased]
+## [1.3.4-20241120]
+- 20241120実装分までの生徒データ（サツキ、チアキ）追加
+
+## [1.3.4-20241023]
 ### Added
 - 20241023実装分までの生徒データ（アイドルサクラコ、アイドルマリー、アイドルミネ）追加
 ### Changed
