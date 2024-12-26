@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 The first part of the version number follows [Semantic Versioning](http://semver.org/).
 The latter part of the version number indicates the latest implementation date among the students at that time.
 
+## [1.3.4-20241224]
+- 20241224実装分までの生徒データ（ノア（パジャマ）、ユウカ（パジャマ））追加
+
 ## [1.3.4-20241120]
 - 20241120実装分までの生徒データ（サツキ、チアキ）追加
 
