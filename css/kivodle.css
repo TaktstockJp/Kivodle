@@ -51,6 +51,10 @@
     padding: 0px;
 }
 
+body {
+    height: 100vh;
+}
+
 #menuBar {
     width: 100%;
     height: auto;
