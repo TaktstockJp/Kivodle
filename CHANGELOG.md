@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 The first part of the version number follows [Semantic Versioning](http://semver.org/).
 The latter part of the version number indicates the latest implementation date among the students at that time.
 
+## [1.3.5-20250212]
+### Added
+- 202502012実装分までの生徒データ（マキ（キャンプ））追加
+
 ## [1.3.5-20250127]
 ### Added
 - 20250127実装分までの生徒データ（アスナ（制服）、カリン（制服）、セイア、ネル（制服）、リオ）追加
