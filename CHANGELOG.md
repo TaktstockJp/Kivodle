@@ -8,6 +8,8 @@ The latter part of the version number indicates the latest implementation date a
 ## [1.3.6-20250226]
 ### Added
 - 20250226実装分までの生徒データ（ジュリ（アルバイト）、セナ（私服））追加
+### Fixed
+- スピードランモードで既に解答に使用した生徒をもう1度解答に使用しようとした場合にタイマーの表示が更新されなくなる不具合を修正
 
 ## [1.3.5-20250212]
 ### Added
