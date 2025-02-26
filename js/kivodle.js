@@ -260,12 +260,6 @@ function answerProcess(guessedName, loadFlg = false) {
     // ボタンを無効化
     $("#buttonGuess").attr('disabled', '');
 
-    // スピードランモードのモード部分書き換えの解除
-    if (intervalId !== void 0) {
-        clearInterval(intervalId);
-        intervalId = void 0;
-    }
-
     // 引数として渡された名前から解答として選ばれた生徒のオブジェクトを取得
     const guessed = implementedStudents.find(s => s.studentName === guessedName);
 
@@ -273,6 +267,12 @@ function answerProcess(guessedName, loadFlg = false) {
     if (guessed == null || (!loadFlg && guesses.includes(guessedName))) {
         $("#buttonGuess").removeAttr('disabled');
         return;
+    }
+
+    // スピードランモードのモード部分書き換えの解除
+    if (intervalId !== void 0) {
+        clearInterval(intervalId);
+        intervalId = void 0;
     }
 
     // 結果判定
