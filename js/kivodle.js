@@ -596,7 +596,7 @@ function closeModal() {
 
 function convertToHiragana(src) {
     const replaceDic = {
-        '（': '',
+        '（': ' ',
         '）': '',
         '＊': '',
         '正月': 'しょうがつ',
