@@ -135,6 +135,12 @@ body {
     min-width: 48px;
 }
 
+#selectRegulation {
+    display: inline-block;
+    border-radius: 5px;
+    margin-left: auto;
+}
+
 .btn {
     transform: skew(-15deg);
     border: none;

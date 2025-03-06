@@ -9,6 +9,13 @@ const same = 'same';
 const wrong = 'wrong';
 const before = 'より前';
 const after = 'より後';
+const regulations = Object.freeze([
+    { label: '全期間', period: '2099/12/31', key: '' },
+    { label: '1周年まで', period: '2022/01/26', key: '.1st' },
+    { label: '2周年まで', period: '2023/01/24', key: '.2nd' },
+    { label: '3周年まで', period: '2024/01/31', key: '.3rd' },
+    { label: '4周年まで', period: '2025/01/27', key: '.4th' },
+]);
 
 const keyGeneralVisited = 'Kivodle.General.Visited';
 const keyDailyLastPlayed = 'Kivodle.Daily.LastPlayed';
@@ -24,7 +31,9 @@ let target;
 let tries;
 let corrects = 0;
 let currentMode;
+let currentRegulation;
 let implementedStudents;
+let regulatedStudents;
 let guesses = [];
 let speedrunStart;
 let speedrunSum;
@@ -45,8 +54,20 @@ function pageLoad() {
 
     setup();
 
-    // プルダウンリストに値を設定する
-    implementedStudents.forEach(function (element) {
+    // サイトを初めて訪れる場合、説明用のモーダルを表示
+    if (!getLocalStorage(keyGeneralVisited)) {
+        setLocalStorage(keyGeneralVisited, true);
+        openModal();
+    }
+}
+
+// プルダウンリストに値を設定する
+function setStudentusToSelect(studentsList) {
+    // 値をクリア
+    $('#selectGuess').children().remove();
+
+    // 値を（再）設定
+    studentsList.forEach(function (element) {
         $('#selectGuess').append($('<option>').html(element.studentName).val(element.studentName).attr('data-search-hiragana', convertToHiragana(element.studentName)));
     });
 
@@ -77,12 +98,6 @@ function pageLoad() {
             return null;
         }
     });
-
-    // サイトを初めて訪れる場合、説明用のモーダルを表示
-    if (!getLocalStorage(keyGeneralVisited)) {
-        setLocalStorage(keyGeneralVisited, true);
-        openModal();
-    }
 }
 
 // ゲームの初期化
@@ -94,6 +109,11 @@ function setup(nextFlg = false) {
     guesses.splice(0);
     judges.splice(0);
     setupDom();
+
+    // プルダウンリストへの値の登録（スピードラン以外）
+    if (currentMode !== modes.speedrun && !nextFlg) {
+        setStudentusToSelect(implementedStudents);
+    }
 
     // モード別処理
     switch (currentMode) {
@@ -174,12 +194,28 @@ function answerForLoad() {
 
 // スピードランモードセットアップ時の処理
 function setupSpeedrunMode() {
+    currentRegulation = regulations.find(regulation => regulation.label == '全期間');
     corrects = 0;
     setupDom();
     $('#guessArea').addClass('fold');
     $('#modeNameArea').html('スピードランモード');
     $('#triesArea').empty();
     $('#infoArea').append($('<div>').attr('id', 'infoButtonArea'));
+
+    // レギュレーション決定用のプルダウンの埋め込み
+    $('#infoButtonArea').append($('<select>').attr('id', 'selectRegulation'));
+    regulations.forEach(function (regulation) {
+        $('#selectRegulation').append($('<option>').html(regulation.label).val(regulation.label));
+    });
+    $('#selectRegulation').select2({
+        width: '100%',
+        minimumResultsForSearch: Infinity
+    });
+    $('#selectRegulation').on('select2:select', function (e) {
+        currentRegulation = regulations.find(regulation => regulation.label == e.params.data.id);
+        setWinStreakAreaForSpeedrun();
+    });
+
     insertSingleButton('startButton', 'スタート', function () { startSpeedrun(false) })
     setWinStreakAreaForSpeedrun();
 }
@@ -189,8 +225,16 @@ function startSpeedrun(nextFlg) {
     // 解答回数の初期化
     tries = 0;
 
+    // 初回のみレギュレーションの設定
+    if (!nextFlg) {
+        regulatedStudents = students.filter(student => {
+            return guessDate(student.data.implementationDate, currentRegulation.period) !== after;
+        });
+        setStudentusToSelect(regulatedStudents);
+    }
+
     // 正解の設定
-    setTarget(Date.now());
+    setTarget(Date.now(), regulatedStudents);
 
     // 変数とDOMの初期化
     guesses.splice(0);
@@ -227,15 +271,15 @@ function setModeInfoAreaForSpeedrunInGame(millisecond) {
 }
 
 function setWinStreakAreaForSpeedrun() {
-    const highScore = getLocalStorage(keySpeedrunHighScore);
-    $('#modeWinStreakArea').html(`ハイスコア：${highScore ? millisecondToEncodedStr(highScore) : '記録なし'}`);
+    const highScore = getLocalStorage(keySpeedrunHighScore + currentRegulation.key);
+    $('#modeWinStreakArea').html(`ハイスコア（${currentRegulation.label}）：${highScore ? millisecondToEncodedStr(highScore) : '記録なし'}`);
 }
 
 // 解答を設定する
-function setTarget(seed) {
+function setTarget(seed, studentsList = implementedStudents) {
     const mt = new MersenneTwister();
     mt.setSeed(seed);
-    target = implementedStudents[mt.nextInt(0, implementedStudents.length)];
+    target = studentsList[mt.nextInt(0, studentsList.length)];
 }
 
 // モードの切り替え
@@ -432,8 +476,9 @@ function endGame(isHit, loadFlg = false) {
             $('#triesArea').append($('<div>').html(`全${speedrunMaxStreak}問正解するのにかかった時間は ${encodedTime} でした。`));
 
             // ハイスコアの置き換えと表示
-            const highScore = getLocalStorage(keySpeedrunHighScore);
-            if (!highScore || speedrunSum < highScore) { setLocalStorage(keySpeedrunHighScore, speedrunSum) }
+            const regulatedKey = keySpeedrunHighScore + currentRegulation.key;
+            const highScore = getLocalStorage(regulatedKey);
+            if (!highScore || speedrunSum < highScore) { setLocalStorage(regulatedKey, speedrunSum) }
             setWinStreakAreaForSpeedrun();
             insertShareButton(createShareStrForSpeedrun(encodedTime));
             insertRetryButton();
@@ -470,7 +515,7 @@ function createShareStrForEndless() {
 
 // SNSでシェアする時の文章を作る（スピードランモード用）
 function createShareStrForSpeedrun(record) {
-    return `#Kivodle のスピードランモードで${speedrunMaxStreak}問正解するのにかかった時間は ${record} でした！\n`;
+    return `#Kivodle のスピードランモード（${currentRegulation.label}）で${speedrunMaxStreak}問正解するのにかかった時間は ${record} でした！\n`;
 }
 
 // シェアボタンをDOMに挿入する
