@@ -10,6 +10,8 @@ The latter part of the version number indicates the latest implementation date a
 - スピードランモードに「1周年まで」「2周年まで」「3周年まで」「4周年まで」「全期間」のレギュレーションを追加
   - 記録はレギュレーション別に分けて記録する
   - これまでのスピードランモードの記録は「全期間」の記録になる
+### Fixed
+- 衣装名「制服」がひらがなで検索できない不具合の修正
 
 ## [1.3.6-20250226]
 ### Added
