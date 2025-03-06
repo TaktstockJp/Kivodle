@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 The first part of the version number follows [Semantic Versioning](http://semver.org/).
 The latter part of the version number indicates the latest implementation date among the students at that time.
 
+## [Unreleased]
+### Added
+- スピードランモードに「1周年まで」「2周年まで」「3周年まで」「4周年まで」「全期間」のレギュレーションを追加
+  - 記録はレギュレーション別に分けて記録する
+  - これまでのスピードランモードの記録は「全期間」の記録になる
+
 ## [1.3.6-20250226]
 ### Added
 - 20250226実装分までの生徒データ（ジュリ（アルバイト）、セナ（私服））追加
