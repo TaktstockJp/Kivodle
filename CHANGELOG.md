@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 The first part of the version number follows [Semantic Versioning](http://semver.org/).
 The latter part of the version number indicates the latest implementation date among the students at that time.
 
-## [Unreleased]
+## [1.4.0-20250226]
 ### Added
 - スピードランモードに「1周年まで」「2周年まで」「3周年まで」「4周年まで」「全期間」のレギュレーションを追加
   - 記録はレギュレーション別に分けて記録する
@@ -14,6 +14,7 @@ The latter part of the version number indicates the latest implementation date a
 - 検索時に生徒の名前と衣装名が一続きの文字列にならないように変更
 ### Fixed
 - 衣装名「制服」がひらがなで検索できない不具合の修正
+- 一部リンク切れの修正
 
 ## [1.3.6-20250226]
 ### Added
@@ -71,7 +72,6 @@ The latter part of the version number indicates the latest implementation date a
 ## [1.3.0-20240729]
 ### Added
 - 2024/07/29実装分までの生徒データ（臨戦ホシノ、シロコ＊テラー、水着アツコ、水着サオリ、水着ヒヨリ）追加
-
 ### Changed
 - レイアウトの調整
   - デフォルトのmarginとpaddingを0に
