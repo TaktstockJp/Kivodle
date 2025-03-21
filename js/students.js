@@ -27,6 +27,7 @@ const students = Object.freeze([
     { studentName: 'イズナ（水着）', data: { weapon: 1, class: 0b00010, school: 0, attackType: 2, implementationDate: '2022/07/25' } },
     { studentName: 'イズミ', data: { weapon: 8, class: 0b00010, school: 3, attackType: 0, implementationDate: '2021/02/04' } },
     { studentName: 'イズミ（水着）', data: { weapon: 8, class: 0b01000, school: 3, attackType: 0, implementationDate: '2021/07/29' } },
+    { studentName: 'イズミ（正月）', data: { weapon: 8, class: 0b01000, school: 3, attackType: 0, implementationDate: '2025/03/19' } },
     { studentName: 'イチカ', data: { weapon: 2, class: 0b00010, school: 2, attackType: 3, implementationDate: '2023/09/27' } },
     { studentName: 'イブキ', data: { weapon: 2, class: 0b01000, school: 3, attackType: 2, implementationDate: '2024/01/24' } },
     { studentName: 'イロハ', data: { weapon: 4, class: 0b10000, school: 3, attackType: 2, implementationDate: '2022/04/27' } },
