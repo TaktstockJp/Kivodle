@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 The first part of the version number follows [Semantic Versioning](http://semver.org/).
 The latter part of the version number indicates the latest implementation date among the students at that time.
 
+## [1.4.1-20250409]
+### Fixed
+- スピードランモードでレギュレーションが「全期間」の時、実装から1日経過していない生徒が正解に選ばれる不具合を修正
+  - この修正により、正解に選ばれた生徒を解答できなくなる現象が発生しなくなります
+
 ## [1.4.0-20250409]
 ### Added
 - 20250409実装分までの生徒データ（サオリ（ドレス））追加
