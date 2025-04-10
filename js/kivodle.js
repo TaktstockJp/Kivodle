@@ -227,7 +227,7 @@ function startSpeedrun(nextFlg) {
 
     // 初回のみレギュレーションの設定
     if (!nextFlg) {
-        regulatedStudents = students.filter(student => {
+        regulatedStudents = implementedStudents.filter(student => {
             return guessDate(student.data.implementationDate, currentRegulation.period) !== after;
         });
         setStudentusToSelect(regulatedStudents);
