@@ -1,6 +1,7 @@
 const students = Object.freeze([
     { studentName: 'アイリ', data: { weapon: 1, class: 0b01000, school: 2, attackType: 0, implementationDate: '2021/02/04' } },
     { studentName: 'アイリ（バンド）', data: { weapon: 1, class: 0b00010, school: 2, attackType: 0, implementationDate: '2024/04/24' } },
+    { studentName: 'アオバ', data: { weapon: 0, class: 0b00001, school: 11, attackType: 3, implementationDate: '2025/04/22' } },
     { studentName: 'アカネ', data: { weapon: 4, class: 0b01000, school: 5, attackType: 1, implementationDate: '2021/02/04' } },
     { studentName: 'アカネ（バニーガール）', data: { weapon: 4, class: 0b00010, school: 5, attackType: 2, implementationDate: '2022/10/12' } },
     { studentName: 'アカリ', data: { weapon: 2, class: 0b00010, school: 3, attackType: 0, implementationDate: '2021/02/04' } },
@@ -124,6 +125,7 @@ const students = Object.freeze([
     { studentName: 'ネル（制服）', data: { weapon: 1, class: 0b00010, school: 5, attackType: 1, implementationDate: '2025/01/27' } },
     { studentName: 'ノア', data: { weapon: 4, class: 0b01000, school: 5, attackType: 2, implementationDate: '2022/09/28' } },
     { studentName: 'ノア（パジャマ）', data: { weapon: 4, class: 0b00010, school: 5, attackType: 1, implementationDate: '2024/12/24' } },
+    { studentName: 'ノゾミ', data: { weapon: 4, class: 0b00010, school: 11, attackType: 3, implementationDate: '2025/04/22' } },
     { studentName: 'ノドカ', data: { weapon: 1, class: 0b01000, school: 1, attackType: 0, implementationDate: '2021/04/29' } },
     { studentName: 'ノドカ（温泉）', data: { weapon: 1, class: 0b00100, school: 1, attackType: 0, implementationDate: '2021/12/15' } },
     { studentName: 'ノノミ', data: { weapon: 8, class: 0b00010, school: 4, attackType: 1, implementationDate: '2021/02/04' } },
@@ -141,6 +143,7 @@ const students = Object.freeze([
     { studentName: 'ハルナ（体操服）', data: { weapon: 6, class: 0b00100, school: 3, attackType: 3, implementationDate: '2023/09/15' } },
     { studentName: 'ハレ', data: { weapon: 2, class: 0b01000, school: 5, attackType: 0, implementationDate: '2021/02/04' } },
     { studentName: 'ハレ（キャンプ）', data: { weapon: 2, class: 0b01000, school: 5, attackType: 0, implementationDate: '2023/12/27' } },
+    { studentName: 'ヒカリ', data: { weapon: 4, class: 0b01000, school: 11, attackType: 3, implementationDate: '2025/04/22' } },
     { studentName: 'ヒナ', data: { weapon: 8, class: 0b00010, school: 3, attackType: 0, implementationDate: '2021/02/04' } },
     { studentName: 'ヒナ（水着）', data: { weapon: 8, class: 0b00010, school: 3, attackType: 0, implementationDate: '2021/07/29' } },
     { studentName: 'ヒナ（ドレス）', data: { weapon: 8, class: 0b00010, school: 3, attackType: 0, implementationDate: '2024/01/31' } },
