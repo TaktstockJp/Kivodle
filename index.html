@@ -23,11 +23,11 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://magicant.github.io/sjavascript/mt.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js" defer></script>
     <script src="./js/kivodle.js"></script>
     <script src="./js/students.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" rel="stylesheet">
     <link rel="stylesheet" href="css/kivodle.css" type="text/css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body onload="pageLoad()">
@@ -51,7 +51,7 @@
             <div id="triesArea"></div>
         </div>
         <div id="guessArea">
-            <select id="selectGuess" style="width: calc(81% - 7px);">
+            <select id="selectGuess">
             </select>
             <button id="buttonGuess" class="btn btnYellow" onclick="answerProcess($('#selectGuess').val())">
                 <div class="btnText">解答</div>
@@ -130,7 +130,7 @@
                 <ul>
                     <li>更新履歴は<a href="https://github.com/TaktstockJp/Kivodle/blob/main/CHANGELOG.md">こちら</a>を参照してください。
                     </li>
-                    <li>2025/04/22現在、アオバ、ノゾミ、ヒカリのデータまで追加済みです。</li>
+                    <li>2025/05/19現在、フィーナ（ガイド）のデータまで追加済みです。</li>
                     <li>新しい生徒はゲームで実装された日の翌日からリストに追加・正解として選ばれる対象になります。</li>
                     <li>コラボ生徒の「学校」は全員「その他」となります。</li>
                     <li>ホシノ（臨戦）は、タンクでもありアタッカーでもあるとして扱われます。</li>
@@ -153,7 +153,7 @@
                             Generator</a>：ロゴを生成して使用させていただきました。</li>
                     <li><a href="https://jquery.com/">jQuery</a></li>
                     <li><a href="https://magicant.github.io/sjavascript/mt.html">Mersenne Twister in JavaScript</a></li>
-                    <li><a href="https://select2.org/">Select2</a></li>
+                    <li><a href="https://tom-select.js.org/">Tom Select</a></li>
                 </ul>
             </div>
             <div>
