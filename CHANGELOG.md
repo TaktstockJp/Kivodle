@@ -1,11 +1,13 @@
 # CHANGELOG
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/).
-The first part of the version number follows [Semantic Versioning](http://semver.org/).
+The format is based on [Keep a Changelog](http://keepachangelog.com/).<br>
+The first part of the version number follows [Semantic Versioning](http://semver.org/).<br>
 The latter part of the version number indicates the latest implementation date among the students at that time.
 
-## [1.5.0-20250422]
+## [1.5.0-20250514]
+### Added
+- 20250514実装分までの生徒データ（フィーナ（ガイド））追加
 ### Changed
 - プルダウンに利用しているライブラリをSelect2からTom Selectに変更
 - プルダウンでの検索時、入力値と完全一致する生徒または衣装がある場合、その生徒をリストの先頭に並べるように変更
