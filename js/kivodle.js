@@ -38,6 +38,7 @@ let guesses = [];
 let speedrunStart;
 let speedrunSum;
 let intervalId;
+let pulldown;
 const judges = [];
 const now = getToday();
 
@@ -47,6 +48,34 @@ function pageLoad() {
     const yesterdayStr = `${String(now.getUTCFullYear())}/${String(now.getUTCMonth() + 1)}/${String(now.getUTCDate() - 1)}`;
     implementedStudents = students.filter(student => {
         return guessDate(student.data.implementationDate, yesterdayStr) !== after;
+    });
+
+    // Selectの初期化
+    pulldown = new TomSelect('#selectGuess', {
+        create: false,
+        maxItems: 1,
+        maxOptions: implementedStudents.length,
+        valueField: 'value',
+        labelField: 'text',
+        searchField: ['text', 'uniqueName', 'editionName'],
+        sortField: null,
+        score: function (search) {
+            return function (item) {
+                const uniqueNameHiragana = convertToHiragana(item.uniqueName);
+                const editionNameHiragana = convertToHiragana(item.editionName);
+                const term = convertToHiragana(search);
+
+                if (uniqueNameHiragana === term) return 2;
+                if (editionNameHiragana === term) return 2;
+                if (uniqueNameHiragana.includes(term)) return 1;
+                if (editionNameHiragana.includes(term)) return 1;
+                return 0;
+            }
+        }
+    });
+
+    pulldown.on('dropdown_open', () => {
+        pulldown.clear();
     });
 
     // ページを開いた時はモードをデイリーモードに設定
@@ -63,41 +92,22 @@ function pageLoad() {
 
 // プルダウンリストに値を設定する
 function setStudentusToSelect(studentsList) {
-    // 値をクリア
-    $('#selectGuess').children().remove();
+    // 値のリストを作成
+    let options = [];
+    studentsList.forEach(function (element) {
+        options.push({
+            value: element.studentName,
+            text: element.studentName,
+            uniqueName: extractUniqueName(element.studentName),
+            editionName: extractEditionName(element.studentName),
+        });
+    });
 
     // 値を（再）設定
-    studentsList.forEach(function (element) {
-        $('#selectGuess').append($('<option>').html(element.studentName).val(element.studentName).attr('data-search-hiragana', convertToHiragana(element.studentName)));
-    });
-
-    // 横幅とCustomMatcherの登録
-    $('#selectGuess').select2({
-        width: 'resolve',
-        matcher: function (params, data) {
-            const select2SearchStr = $(data.element).data('search-hiragana');
-            let modifiedData;
-            if ($.trim(params.term) === '') {
-                return data;
-            }
-            if (typeof data.text === 'undefined') {
-                return null;
-            }
-            if (data.text.indexOf(params.term) > -1) {
-                modifiedData = $.extend({}, data, true);
-                return modifiedData;
-            }
-
-            if (select2SearchStr === null || select2SearchStr === void 0) {
-                return null;
-            }
-            if (select2SearchStr.toString().indexOf(params.term) > -1) {
-                modifiedData = $.extend({}, data, true);
-                return modifiedData;
-            }
-            return null;
-        }
-    });
+    pulldown.clear();
+    pulldown.clearOptions();
+    pulldown.addOptions(options);
+    pulldown.refreshOptions(false);
 }
 
 // ゲームの初期化
@@ -203,16 +213,27 @@ function setupSpeedrunMode() {
     $('#infoArea').append($('<div>').attr('id', 'infoButtonArea'));
 
     // レギュレーション決定用のプルダウンの埋め込み
-    $('#infoButtonArea').append($('<select>').attr('id', 'selectRegulation'));
+    const selectRegulation = document.createElement('select');
+    selectRegulation.id = 'selectRegulation';
+    document.getElementById('infoButtonArea').appendChild(selectRegulation);
+
+    // プルダウンにregulationsのオプションを追加
     regulations.forEach(function (regulation) {
-        $('#selectRegulation').append($('<option>').html(regulation.label).val(regulation.label));
+        const option = document.createElement('option');
+        option.textContent = regulation.label;
+        option.value = regulation.label;
+        selectRegulation.appendChild(option);
     });
-    $('#selectRegulation').select2({
-        width: '100%',
-        minimumResultsForSearch: Infinity
+
+    // Tom Selectの初期化
+    new TomSelect('#selectRegulation', {
+        create: false,
+        searchField: [],
+        controlInput: null
     });
-    $('#selectRegulation').on('select2:select', function (e) {
-        currentRegulation = regulations.find(regulation => regulation.label == e.params.data.id);
+
+    selectRegulation.addEventListener('change', function (e) {
+        currentRegulation = regulations.find(regulation => regulation.label === e.target.value);
         setWinStreakAreaForSpeedrun();
     });
 
@@ -594,10 +615,25 @@ function closeModal() {
     $('#modal').removeClass('open');
 }
 
+function extractUniqueName(src) {
+    const index = src.indexOf('（');
+    if (index === -1) {
+        return src;
+    }
+    return src.substring(0, index);
+}
+
+function extractEditionName(src) {
+    const startIndex = src.indexOf('（');
+    const endIndex = src.indexOf('）');
+    if (startIndex === -1) {
+        return '';
+    }
+    return src.substring(startIndex + 1, endIndex);
+}
+
 function convertToHiragana(src) {
     const replaceDic = {
-        '（': ' ',
-        '）': '',
         '＊': '',
         '正月': 'しょうがつ',
         '水着': 'みずぎ',

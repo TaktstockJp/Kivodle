@@ -123,14 +123,27 @@ body {
     text-align: center;
 }
 
-#selectGuess {
-    display: inline-block;
-    border-radius: 5px;
-    margin-left: auto;
+.ts-wrapper {
+    flex-grow: 1;
+}
+
+.ts-control {
+    height: 36px;
+    padding: 4px;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.ts-dropdown-content {
+    max-height: 40vh;
+}
+
+.ts-dropdown-content > .option {
+    font-size: 1rem;
 }
 
 #buttonGuess {
-    margin: 0 3.5px;
+    margin: 0 4.825px;
     width: 19%;
     min-width: 48px;
 }
@@ -354,9 +367,4 @@ body {
 #modal.open,
 #modalOverlay.open {
     display: block;
-}
-
-.select2-results,
-.select2-results__options {
-    max-height: 40vh !important;
 }
