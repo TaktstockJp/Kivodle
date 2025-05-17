@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 The first part of the version number follows [Semantic Versioning](http://semver.org/).
 The latter part of the version number indicates the latest implementation date among the students at that time.
 
+## [1.5.0-20250422]
+### Changed
+- プルダウンに利用しているライブラリをSelect2からTom Selectに変更
+- プルダウンでの検索時、入力値と完全一致する生徒または衣装がある場合、その生徒をリストの先頭に並べるように変更
+- プルダウンのUIの調整
+
 ## [1.4.1-20250422]
 ### Added
 - 学校にハイランダーを追加
