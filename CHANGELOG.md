@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).<br>
 The first part of the version number follows [Semantic Versioning](http://semver.org/).<br>
 The latter part of the version number indicates the latest implementation date among the students at that time.
 
+## [Unreleased]
+### Fixed
+- ナグサ・ニヤの実装日が間違っている不具合の修正
+
+## [1.5.0-20250522]
+### Added
+- 20250521実装分までの生徒データ（ナグサ、ニヤ）追加
+
 ## [1.5.0-20250514]
 ### Added
 - 20250514実装分までの生徒データ（フィーナ（ガイド））追加
