@@ -5,7 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).<br>
 The first part of the version number follows [Semantic Versioning](http://semver.org/).<br>
 The latter part of the version number indicates the latest implementation date among the students at that time.
 
-## [Unreleased]
+## [1.5.0-20250604]
+### Added
+- 20250604実装分までの生徒データ（ナツ（バンド））追加
 ### Fixed
 - ナグサ・ニヤの実装日が間違っている不具合の修正
 
