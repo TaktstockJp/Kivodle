@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).<br>
 The first part of the version number follows [Semantic Versioning](http://semver.org/).<br>
 The latter part of the version number indicates the latest implementation date among the students at that time.
 
+## [1.5.0-20250625]
+### Added
+- 20250625実装分までの生徒データ（キキョウ（水着）、ユカリ（水着）、レンゲ（水着））追加
+
 ## [1.5.0-20250604]
 ### Added
 - 20250604実装分までの生徒データ（ナツ（バンド））追加
