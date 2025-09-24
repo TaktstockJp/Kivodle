@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).<br>
 The first part of the version number follows [Semantic Versioning](http://semver.org/).<br>
 The latter part of the version number indicates the latest implementation date among the students at that time.
 
+## [1.5.0-20251008]
+### Added
+- 20251008実装分までの生徒データ（ミサキ（水着）、フユ、ミヨ、リツ）追加
+
 ## [1.5.0-20250820]
 ### Added
 - 学校にワイルドハントを追加
