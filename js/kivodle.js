@@ -18,6 +18,8 @@ const regulations = Object.freeze([
 ]);
 
 const keyGeneralVisited = 'Kivodle.General.Visited';
+const keyDataLatest = 'Kivodle.Data.Latest';
+const keyDataStudents = 'Kivodle.Data.Students';
 const keyDailyLastPlayed = 'Kivodle.Daily.LastPlayed';
 const keyDailyGuesses = 'Kivodle.Daily.Guesses';
 const keyDailyWinStreak = 'Kivodle.Daily.WinStreak';
@@ -43,7 +45,10 @@ const judges = [];
 const now = getToday();
 
 // ページロード時に1回だけ実行する
-function pageLoad() {
+async function pageLoad() {
+    // 生徒リストの取得
+    await loadStudentsAsync();
+
     // 実装されて1日経っていない生徒を除外する処理
     const yesterdayStr = `${String(now.getUTCFullYear())}/${String(now.getUTCMonth() + 1)}/${String(now.getUTCDate() - 1)}`;
     implementedStudents = students.filter(student => {
