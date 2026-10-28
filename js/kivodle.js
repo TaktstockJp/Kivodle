@@ -15,7 +15,7 @@ const regulations = Object.freeze([
     { label: '2周年まで', period: '2023/01/24', key: '.2nd' },
     { label: '3周年まで', period: '2024/01/31', key: '.3rd' },
     { label: '4周年まで', period: '2025/01/27', key: '.4th' },
-    { label: '5周年まで', period: '2025/01/29', key: '.5th' },
+    { label: '5周年まで', period: '2026/01/29', key: '.5th' },
 ]);
 
 const keyGeneralVisited = 'Kivodle.General.Visited';
