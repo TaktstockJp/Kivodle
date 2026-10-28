@@ -2,8 +2,8 @@ const maxTries = 5;
 const speedrunMaxStreak = 10;
 const weapons = Object.freeze(['SG', 'SMG', 'AR', 'GL', 'HG', 'RL', 'SR', 'RG', 'MG', 'MT', 'FT']);
 const classes = Object.freeze({ 0b00001: 'タンク', 0b00010: 'アタッカー', 0b00100: 'ヒーラー', 0b01000: 'サポーター', 0b10000: 'T.S' });
-const schools = Object.freeze(['百鬼夜行', 'レッドウィンター', 'トリニティ', 'ゲヘナ', 'アビドス', 'ミレニアム', 'アリウス', '山海経', 'ヴァルキューレ', 'SRT', 'その他', 'ハイランダー', 'ワイルドハント']);
-const attackTypes = Object.freeze(['爆発', '貫通', '神秘', '振動']);
+const schools = Object.freeze(['百鬼夜行', 'レッドウィンター', 'トリニティ', 'ゲヘナ', 'アビドス', 'ミレニアム', 'アリウス', '山海経', 'ヴァルキューレ', 'SRT', 'その他', 'ハイランダー', 'ワイルドハント', 'オデュッセイア']);
+const attackTypes = Object.freeze(['爆発', '貫通', '神秘', '振動', '分解']);
 const modes = Object.freeze({ daily: 'デイリー', endless: 'エンドレス', speedrun: 'スピードラン' });
 const same = 'same';
 const wrong = 'wrong';
@@ -15,6 +15,7 @@ const regulations = Object.freeze([
     { label: '2周年まで', period: '2023/01/24', key: '.2nd' },
     { label: '3周年まで', period: '2024/01/31', key: '.3rd' },
     { label: '4周年まで', period: '2025/01/27', key: '.4th' },
+    { label: '5周年まで', period: '2025/01/29', key: '.5th' },
 ]);
 
 const keyGeneralVisited = 'Kivodle.General.Visited';
